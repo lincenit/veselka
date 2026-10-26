@@ -144,11 +144,13 @@ export function Facade({
           tilt: mix(f.tilt, 0, e),
           push: 0,
         }
-        if (wind) {
+        // the fins near the pointer bend where it is, not at their own knee: on a tall block
+        // (the hero and the intro under one facade) the knee is often off screen
+        if (wind && my > 0 && my < H) {
           const dx = f.x - mx
-          const dy = t.ky * H - my
-          const fall = Math.exp(-(dx * dx + dy * dy) / (2 * 110 * 110))
-          t.push = Math.sign(dx || 1) * 46 * fall
+          const fall = Math.exp(-(dx * dx) / (2 * 100 * 100))
+          t.push = Math.sign(dx || 1) * 56 * fall
+          t.ky = mix(t.ky, my / H, fall)
         }
         const c = f.cur
         for (const k of ['top', 'bottom', 'ky', 'kx', 'tilt', 'push'] as const) {

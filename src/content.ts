@@ -1,5 +1,6 @@
-// Every word on the page. Copy comes from the client brief (Zuzana Fridrich, 2026-10-23);
-// contact details and social links are placeholders until the detailed brief arrives.
+// Every word on the page. Copy comes from the client brief (Zuzana Fridrich, 2026-10-23), the
+// phone and the partners from "Allrisk VESELKA - základní informace" (2026-10-22); social links
+// are placeholders until the client confirms its profiles.
 // A `*phrase*` in a title is its emphasis, set in gold.
 
 export const nav = [
@@ -7,20 +8,30 @@ export const nav = [
   { href: '#benefity', label: 'Benefity' },
   { href: '#pro-koho', label: 'Pro koho' },
   { href: '#vizualizace', label: 'Vizualizace' },
+  { href: '#prostory', label: 'Prostory' },
   { href: '#lokalita', label: 'Lokalita' },
-  { href: '#partneri', label: 'Partneři' },
 ]
 
 export const hero = {
   eyebrow: 'Business & Lifestyle Park · Troubsko u Brna',
-  title: ['Prostor s charakterem', '*pro značky s ambicí*'],
+  title: ['Prémiový prostor s charakterem', '*pro značky s ambicí*'],
   lead: 'Reprezentativní komerční prostory, které nejsou jen dobrou adresou, ale stávají se součástí image vaší značky.',
   cta: 'Mám zájem o prostor',
   secondary: 'Poznat projekt',
   image: '/img/hero.webp',
+  // the hero variants with more than one picture (slideshow, mosaic, panels) run through these
+  slides: [
+    { src: '/img/hero.webp', caption: 'Zlatá fasáda od příjezdové cesty' },
+    { src: '/img/ext-1.webp', caption: 'Parter s kavárnou a terasou' },
+    { src: '/img/ext-6.webp', caption: 'Příjezd od kruhového objezdu' },
+    { src: '/img/ext-3.webp', caption: 'Vstup s orientačním pylonem' },
+    { src: '/img/ext-4.webp', caption: 'Letecký pohled od dálnice' },
+    { src: '/img/int-1.webp', caption: 'Recepce nájemce po Fit Out' },
+  ],
   facts: [
     { label: 'Lokalita', value: 'Troubsko u Brna' },
     { label: 'Nabídka', value: 'Pronájem i prodej' },
+    { label: 'Jednotky', value: 'Od 70 m²' },
     { label: 'Provedení', value: 'Shell & Core · Fit Out' },
   ],
   scroll: 'Scrollujte',
@@ -37,11 +48,11 @@ export const intro = {
 
 export const benefits = {
   eyebrow: 'Proč Allrisk VESELKA',
-  title: '*Pět důvodů*, proč tady růst',
+  title: '*Šest důvodů*, proč tady růst',
   items: [
     {
       icon: 'building',
-      image: '/img/facade.webp',
+      image: '/img/architektura.webp',
       title: 'Výrazná architektura a identita',
       text: 'Zlatá fasáda přirozeně přitahuje pozornost, zvyšuje zapamatovatelnost místa a podporuje image značek, které tu sídlí.',
     },
@@ -49,12 +60,12 @@ export const benefits = {
       icon: 'road',
       image: '/img/ext-4.webp',
       title: 'Strategická poloha',
-      text: 'Výborná dostupnost autem a napojení na hlavní dopravní tahy. Bez zajíždění do centra a bez hledání parkování.',
+      text: 'Výborná dostupnost autem i MHD a napojení na hlavní dopravní tahy. Bez zajíždění do centra a bez hledání parkování.',
     },
     {
       icon: 'diamond',
       image: '/img/ext-1.webp',
-      title: 'Cílená a kvalitní klientela',
+      title: 'Exkluzivní prostředí a kvalitní klientela',
       text: 'Bonitní klienti orientovaní na kvalitu, profesionální služby na vysoké úrovni a silný zákaznický zážitek.',
     },
     {
@@ -66,50 +77,66 @@ export const benefits = {
     {
       icon: 'parking',
       image: '/img/ext-6.webp',
-      title: 'Komfort pro vás i vaše klienty',
-      text: 'Parkování přímo v místě, přehlednost, diskrétnost a soukromí, které prémiová klientela očekává.',
+      title: 'Komfort pro vaše služby i klientelu',
+      text: 'Parkování přímo v areálu pro klienty i zaměstnance, přehlednost, diskrétnost a soukromí, které prémiová klientela očekává.',
+    },
+    {
+      icon: 'key',
+      image: '/img/int-1.webp',
+      title: 'Shell & Core i Fit Out',
+      text: 'Komerční jednotky od 70 m² k prodeji i pronájmu. Prostor převezmete ve stavu Shell & Core a dotvoříte po svém, nebo vám jej připravíme na klíč přesně podle vašich představ.',
     },
   ],
+  // the earlier separate gold block, still shown by v2.html and v3.html
   fitout: {
     image: '/img/int-1.webp',
     title: 'Shell & Core *i Fit Out*',
-    text: 'Prostor převezmete ve stavu Shell & Core a dotvoříte po svém, nebo vám jej připravíme na klíč přesně podle vašich představ.',
+    text: 'Komerční jednotky od 70 m² k prodeji i pronájmu. Prostor převezmete ve stavu Shell & Core a dotvoříte po svém, nebo vám jej připravíme na klíč přesně podle vašich představ.',
   },
 }
 
-// The three personas of the brief (its "Cílová skupina"): the kinds of brand and why they come.
-// The photos are Unsplash stand-ins (free licence) until the client sends its own.
+// The tenant categories of "základní informace" (2026-10-22), each with its line from the same
+// document. The photos are the building's renders and Unsplash stand-ins (free licence) until
+// the client sends its own.
 export const audience = {
   eyebrow: 'Pro koho',
-  title: 'Pro značky, pro které je *kvalita prostředí* samozřejmostí',
+  title: 'Moderní komerční prostory *pro všechna vaše zaměření*',
   lead: 'Společným jmenovatelem našich nájemců je důraz na profesionalitu, důvěryhodnost, estetiku a prémiový klientský servis.',
   items: [
     {
       icon: 'clinic',
       images: ['/img/persona-clinic.jpg', '/img/persona-clinic-2.jpg', '/img/persona-clinic-3.jpg'],
-      title: 'Reprezentativní odborné služby',
-      text: 'Prostor, který podpoří důvěryhodnost značky a vytvoří kvalitní klientský dojem.',
-      kinds: ['Privátní klinika', 'Estetická medicína', 'Fyzioterapie', 'Odborné poradenství'],
+      title: 'Kliniky a ordinace',
+      text: 'Moderní komerční prostory pro vaši ordinaci i kliniku.',
+      kinds: ['Ordinace', 'Privátní klinika', 'Estetická medicína', 'Fyzioterapie'],
+    },
+    {
+      icon: 'cafe',
+      images: ['/img/ext-1.webp', '/img/persona-showroom-3.jpg', '/img/persona-cafe.jpg'],
+      title: 'Kavárny a restaurace',
+      text: 'Moderní komerční prostory pro vaši restauraci či kavárnu.',
+      kinds: ['Kavárna', 'Restaurace', 'Bistro'],
+    },
+    {
+      icon: 'shop',
+      images: ['/img/persona-showroom.jpg', '/img/persona-showroom-2.jpg', '/img/ext-2.webp'],
+      title: 'Obchody a služby',
+      text: 'Velkorysé komerční prostory pro váš market, služby i obchodní jednotku.',
+      kinds: ['Market', 'Obchodní jednotka', 'Showroom', 'Služby'],
     },
     {
       icon: 'wellbeing',
-      images: ['/img/persona-wellbeing.jpg', '/img/persona-wellbeing-2.jpg', '/img/persona-wellbeing-3.jpg'],
-      title: 'Lifestyle a wellbeing koncepty',
-      text: 'Prostředí, ve kterém koncept působí moderně, esteticky a prémiově.',
-      kinds: ['Beauty studio', 'Masáže a wellbeing', 'Prémiové fitness', 'Showroom'],
+      images: ['/img/persona-beauty.jpg', '/img/persona-wellbeing-2.jpg', '/img/persona-wellbeing.jpg'],
+      title: 'Beauty a wellbeing koncepty',
+      text: 'Prémiové komerční prostory pro váš beauty salon i wellbeing koncept.',
+      kinds: ['Beauty salon', 'Kosmetika', 'Masáže', 'Wellbeing'],
     },
     {
-      icon: 'showroom',
-      images: ['/img/persona-showroom.jpg', '/img/persona-showroom-2.jpg', '/img/persona-showroom-3.jpg'],
-      title: 'Design a showroomové značky',
-      text: 'Prostor, který funguje jako reprezentace značky.',
-      kinds: [
-        'Designový showroom',
-        'Prémiové vybavení interiéru',
-        'Šperky a hodinářství',
-        'Prémiové audio',
-        'Kavárna a restaurace',
-      ],
+      icon: 'fitness',
+      images: ['/img/persona-fitness.jpg', '/img/persona-fitness-2.jpg', '/img/persona-fitness-3.jpg'],
+      title: 'Fitness centrum',
+      text: 'Exkluzivní komerční prostory pro vaše fitness studio.',
+      kinds: ['Fitness centrum', 'Fitness studio', 'Pohyb a aktivní životní styl'],
     },
   ],
 }
@@ -131,6 +158,12 @@ export const gallery = {
   ],
 }
 
+// The offer itself (offer.tsx); its units are mock data until the Realman feed is connected.
+export const offer = {
+  eyebrow: 'Nabídka prostor',
+  title: 'Vyberte si *svůj prostor*',
+}
+
 export const location = {
   eyebrow: 'Lokalita',
   title: 'Troubsko *u Brna*',
@@ -139,7 +172,7 @@ export const location = {
     {
       icon: 'road',
       title: 'Napojení na hlavní tahy',
-      text: 'Rychlý příjezd autem odkudkoli z Brna i okolí, bez hledání cesty.',
+      text: 'Rychlý příjezd autem i MHD odkudkoli z Brna i okolí, bez hledání cesty.',
     },
     {
       icon: 'building',
@@ -161,10 +194,10 @@ export const partners = {
   eyebrow: 'Kdo stojí za projektem',
   title: 'Za projektem stojí',
   items: [
-    { logo: '', name: 'Allrisk Veselka, s.r.o.', role: 'Hlavní developer' },
+    { logo: '', name: 'Allrisk Veselka, s.r.o.', role: 'Developer projektu' },
     {
       logo: '/img/partner-gebas-white.png',
-      name: 'GEBAS atelier architects s.r.o.',
+      name: 'Gebas atelier architects',
       role: 'Generální projektant',
     },
     {
@@ -193,7 +226,7 @@ export const contact = {
     title: 'Děkujeme za váš zájem',
     text: 'Vaši poptávku jsme přijali a brzy se vám ozveme.',
   },
-  phone: '+420 000 000 000',
+  phone: '+420 770 332 223',
   email: 'info@allriskveselka.cz',
   web: 'www.allriskveselka.cz',
   socials: [

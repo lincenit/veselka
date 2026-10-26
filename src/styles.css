@@ -32,7 +32,7 @@
   --color-primary-hover: var(--p-blue-800);
   --color-deep: var(--p-blue-deep);
   --color-footer: var(--p-navy-footer);
-  --color-heading: var(--p-blue-900);
+  --color-heading: var(--p-blue-950);
   --color-steel: var(--p-blue-600);
   --color-sky: var(--p-blue-200);
   --color-tint: var(--p-blue-50);
@@ -113,6 +113,19 @@ body {
   }
 }
 
+@keyframes slide {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+/* a bottom sheet coming up on a phone */
+@keyframes sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -120,8 +133,8 @@ body {
   }
 }
 
-/* Benefits on desktop, once motion.ts runs: the card being read stands out, the rest wait. */
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+/* Benefits, once motion.ts runs: the card being read stands out, the rest wait. */
+@media (prefers-reduced-motion: no-preference) {
   [data-benefit-card] {
     transition:
       opacity 0.6s ease,

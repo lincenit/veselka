@@ -642,7 +642,7 @@ function Partners() {
                 {p.logo ? (
                   <img src={p.logo} alt={p.name} className="h-12 w-auto object-contain" />
                 ) : (
-                  <Logo className="h-12 text-white" />
+                  <Logo park={false} className="h-9 text-white" />
                 )}
               </div>
               <p className="mt-8 text-xs font-bold tracking-[0.15em] text-gold-light uppercase">{p.role}</p>

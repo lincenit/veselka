@@ -21,8 +21,9 @@ export default defineConfig(({ mode }) => {
   return {
     base,
     plugins: [react(), tailwindcss(), publicBase(base)],
-    // lamely.html: the facade-motif proposals, v2.html and v3.html: other takes on the page, all own pages until approved
-    build: { rollupOptions: { input: ['index.html', 'lamely.html', 'v2.html', 'v3.html'] } },
+    // lamely.html: the facade-motif proposals, v2.html and v3.html: other takes on the page, all own pages until approved;
+    // budova.html: the offer of spaces (building, floor plans, units)
+    build: { rollupOptions: { input: ['index.html', 'lamely.html', 'v2.html', 'v3.html', 'budova.html'] } },
     server: { port: Number(env.PORT) || 3040, strictPort: true },
   }
 })

@@ -16,7 +16,7 @@ const ease = 'expo.out'
  * - data-reveal / data-stagger: text rises in (one curve everywhere; stagger = the same per child)
  * - data-slat: a photo opens through the facade's gold fins
  * - pinned scenes: the hero curtain (data-hero-*) and v3's horizontal run (data-hscroll)
- * - Benefits: each photo rises into the sticky frame as its card comes up (data-benefit)
+ * - Benefits: gold fins change the sticky frame's photo as each card comes up (data-benefit)
  * - Pro koho's stacking cards (data-stack)
  * Pins are created first: a trigger made before a pin above it would measure the page without
  * the pin's spacer and fire too early - which left the lower sections with no visible reveal.
@@ -44,7 +44,72 @@ export function initMotion() {
     const intro = document.querySelector<HTMLElement>('[data-intro]')
     if (!hero || !intro) return
 
-    // ?hero=frame (the default): the photo pulls away into a frame over the blue facade, whose
+    // version 1 (zigzag.tsx): the intro lies over the hero, out to the right, the edge on its
+    // left side showing as a strip. The two pin for a screen's worth of scroll while the
+    // intro is pulled in whole from the right - copy, ribbons and edge together, the copy
+    // there all the way; then the page goes on from the intro. Without motion nothing
+    // overlaps and the two simply follow each other.
+    if (hero.dataset.heroMode === 'sweep') {
+      const scene = hero.parentElement
+      const edge = scene?.querySelector<HTMLElement>('[data-intro-edge]')
+      if (!scene || !edge) return
+      // the edge's left side shows from 76% of the width (84% on a phone); the intro starts
+      // where the edge ends
+      const width = () => edge.offsetWidth
+      const start = () => window.innerWidth * (window.innerWidth >= 1024 ? 0.76 : 0.84)
+      // the hero's own height: max(100svh, 640px)
+      gsap.set(intro, { marginTop: 'calc(-1 * max(100svh, 640px))', minHeight: 'max(100svh, 640px)' })
+      const tl = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: scene,
+            start: 'top top',
+            end: () => `+=${window.innerHeight}`,
+            scrub: true,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        })
+        // both follow the scroll one to one, so they stay joined; the hero's copy goes as the
+        // edge reaches it
+        .fromTo(edge, { x: start }, { x: () => -width(), ease: 'none', duration: 1 }, 0)
+        .fromTo(intro, { x: () => start() + width() }, { x: 0, ease: 'none', duration: 1 }, 0)
+        .to('[data-hero-copy]', { x: -80, autoAlpha: 0, ease: 'power1.in', duration: 0.4 }, 0.1)
+        .to('[data-hero-img]', { scale: 1.1, ease: 'none', duration: 1 }, 0)
+        // the edge's gold line draws itself top down with the scroll, the intro's after it,
+        // as the fields' lines do further down the page
+        .fromTo(
+          edge.querySelectorAll('[data-chevron-line]'),
+          // autoRound off: the length is 1, and rounding would jump it from nothing to whole
+          { strokeDashoffset: 1 },
+          { strokeDashoffset: 0, ease: 'none', duration: 0.45, autoRound: false },
+          0,
+        )
+        .fromTo(
+          intro.querySelectorAll('[data-zz-line]'),
+          { strokeDashoffset: 1 },
+          { strokeDashoffset: 0, ease: 'none', duration: 0.6, autoRound: false },
+          0.4,
+        )
+      // the header stays see-through over the scene until the intro has come in
+      hero.dataset.end = String(window.innerHeight)
+      // a link to the intro (the menu, "Scrollujte") goes to the end of the sweep: the copy's
+      // own place lies at the top of the scene, which would stop it halfway, with the panel
+      // over the hero and nothing in it. Caught before Lenis's own anchor handling.
+      const toIntro = (e: MouseEvent) => {
+        if (!(e.target as Element | null)?.closest?.('a[href="#projekt"]')) return
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        lenis.scrollTo(tl.scrollTrigger?.end ?? window.innerHeight, { duration: 1.6 })
+      }
+      document.addEventListener('click', toIntro, true)
+      return () => {
+        document.removeEventListener('click', toIntro, true)
+        delete hero.dataset.end
+      }
+    }
+
+    // version 2: the photo pulls away into a frame over the blue facade, whose
     // fins line up meanwhile; nothing is pinned, the intro simply follows
     if (hero.dataset.heroMode === 'frame') {
       gsap
@@ -170,46 +235,76 @@ export function initMotion() {
     })
   })
 
-  // 2b. Benefits: the next photo rises in as a rounded panel that widens to the frame, the one
-  // under it sinking back into the dark (desktop)
-  mm.add(`(min-width: 1024px) and ${calm}`, () => {
+  // 2b. Benefits: as the next card comes up, the photo in the sticky frame changes (gold fins
+  // close and part, or version 1's edge rises). On a phone the frame sticks at the top and the
+  // cards pass under it, so everything happens lower on the screen.
+  mm.add({ desktop: `(min-width: 1024px) and ${calm}`, phone: `(max-width: 1023px) and ${calm}` }, (ctx) => {
+    const phone = !!ctx.conditions?.phone
     const items = all('[data-benefit]')
     const layers = all('[data-benefit-layer]')
-    const imgs = layers.map((l) => l.querySelector('img'))
-    const count = document.querySelector('[data-benefit-count]')
     document.documentElement.dataset.motion = ''
     items.forEach((li, i) => {
-      if (i > 0 && layers[i]) {
-        gsap
-          .timeline({ scrollTrigger: { trigger: li, start: 'top 95%', end: 'top 40%', scrub: true } })
-          .fromTo(
-            layers[i],
-            { clipPath: 'inset(100% 10% 0% 10% round 24px)' },
-            { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'power3.inOut' },
-            0,
-          )
-          .fromTo(imgs[i], { scale: 1.3, yPercent: 15 }, { scale: 1, yPercent: 0, ease: 'power2.out' }, 0)
-          // fromTo, not to: a plain to would start from this photo's own pre-entry scale
-          .fromTo(
-            imgs[i - 1],
-            { scale: 1, yPercent: 0, filter: 'brightness(1)' },
-            { scale: 1.08, yPercent: -6, filter: 'brightness(0.45)', ease: 'none', immediateRender: false },
-            0,
-          )
+      const layer = layers[i]
+      if (i > 0 && layer) {
+        const img = layer.querySelector('img')
+        const fins = layer.querySelectorAll<HTMLElement>('[data-benefit-fin]')
+        // the inline transform only hides them before this runs; GSAP takes over every part of
+        // it (version 3 has none)
+        if (fins.length) gsap.set(fins, {
+          skewX: (_: number, el: HTMLElement) => Number(el.dataset.skew),
+          scaleY: 1.2,
+          scaleX: 0,
+          transformOrigin: (k: number) => (k % 2 ? 'left center' : 'right center'),
+        })
+        const st = phone
+          ? { trigger: li, start: 'top 100%', end: 'top 55%', scrub: true }
+          : { trigger: li, start: 'top 95%', end: 'top 40%', scrub: true }
+        // version 1 (zigzag.tsx): the next photo rises from the foot behind a "^" edge
+        if (document.documentElement.dataset.style === 'zlom') {
+          gsap
+            .timeline({ scrollTrigger: st })
+            .fromTo(
+              layer,
+              { clipPath: 'polygon(0% 130%, 50% 110%, 100% 130%, 100% 140%, 0% 140%)' },
+              {
+                clipPath: 'polygon(0% 0%, 50% -20%, 100% 0%, 100% 140%, 0% 140%)',
+                ease: 'power2.inOut',
+                duration: 1,
+              },
+              0,
+            )
+            .fromTo(img, { scale: 1.2 }, { scale: 1, ease: 'power2.out', duration: 1 }, 0)
+        } else if (document.documentElement.dataset.style === 'kosoctverce') {
+          // the diamonds (motif.css): the next photo opens out of a diamond in the middle instead
+          gsap
+            .timeline({ scrollTrigger: st })
+            .fromTo(
+              layer,
+              { clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)' },
+              { clipPath: 'polygon(50% -80%, 180% 50%, 50% 180%, -80% 50%)', ease: 'power2.in' },
+              0,
+            )
+            .fromTo(img, { scale: 1.25 }, { scale: 1, ease: 'power2.out' }, 0)
+        } else {
+          gsap.set(img, { autoAlpha: 0, scale: 1.15 })
+          const each = { each: 0.03, from: 'random' as const }
+          gsap
+            .timeline({ scrollTrigger: st })
+            .to(fins, { scaleX: 1, stagger: each, ease: 'power2.out', duration: 0.5 }, 0)
+            // behind the closed fins the photo changes
+            .set(img, { autoAlpha: 1 }, 0.95)
+            .to(img, { scale: 1, ease: 'power2.out', duration: 1 }, 0.95)
+            .to(fins, { scaleX: 0, stagger: each, ease: 'power2.in', duration: 0.5 }, 1)
+        }
       }
-      const zone = { trigger: li, start: 'top 55%', end: 'bottom 55%' }
       ScrollTrigger.create({
-        ...zone,
+        trigger: li,
+        start: phone ? 'top 70%' : 'top 55%',
+        end: phone ? 'bottom 70%' : 'bottom 55%',
         onToggle: (st) => {
           li.classList.toggle('is-active', st.isActive)
-          if (st.isActive && count) count.textContent = String(i + 1).padStart(2, '0')
         },
       })
-      gsap.fromTo(
-        li.querySelector('[data-benefit-bar]'),
-        { scaleX: 0 },
-        { scaleX: 1, ease: 'none', scrollTrigger: { ...zone, scrub: true } },
-      )
     })
     return () => {
       delete document.documentElement.dataset.motion
@@ -217,8 +312,33 @@ export function initMotion() {
     }
   })
 
-  // 3. Pro koho: the cards stack, each rising over the one before, which steps back (desktop)
-  mm.add(`(min-width: 1024px) and ${calm}`, () => {
+  // 2c. Benefits: each card's own line fills while it is read - on a phone, while the card
+  // crosses the screen
+  mm.add(
+    { desktop: `(min-width: 1024px) and ${calm}`, phone: `(max-width: 1023px) and ${calm}` },
+    (ctx) => {
+      const desktop = ctx.conditions?.desktop
+      all('[data-benefit]').forEach((li) =>
+        gsap.fromTo(
+          li.querySelector('[data-benefit-bar]'),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: li,
+              start: desktop ? 'top 55%' : 'top 70%',
+              end: desktop ? 'bottom 55%' : 'bottom 70%',
+              scrub: true,
+            },
+          },
+        ),
+      )
+    },
+  )
+
+  // 3. Pro koho: the cards stack, each rising over the one before, which steps back
+  mm.add(calm, () => {
     const cards = all('[data-stack]')
     cards.forEach((card, i) => {
       const next = cards[i + 1]

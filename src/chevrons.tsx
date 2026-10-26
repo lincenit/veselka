@@ -76,7 +76,10 @@ export function Chevrons({ variant, periods: n = 1, stroke, className = '' }: Pr
         </>
       )}
       <polyline
+        data-chevron-line
         points={pts(gold)}
+        // a length of 1, so a page can draw it in with stroke-dashoffset
+        pathLength={1}
         fill="none"
         // on a blue field the line is light blue: blue grounds keep to blue
         stroke={variant === 'on-blue' ? 'var(--color-blue-300)' : `url(#${id})`}
