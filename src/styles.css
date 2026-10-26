@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import './tokens.css';
+
+/* both entry pages (index.html, lamely.html); new files were otherwise missed until a restart */
+@source './';
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('/fonts/Magistral-Book.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Magistral';
+  src: url('/fonts/Magistral-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Magistral';
+  src: url('/fonts/Magistral-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* The palette is allrisk.cz's own (tokens.css, copied from @allrisk/ui unchanged); Veselka
+   adds only its gold, which takes the role allrisk.cz gives the accent phrase in a heading.
+   The aliases below keep this page's short names pointing at those tokens. */
+@theme {
+  --color-primary: var(--p-blue-700);
+  --color-primary-hover: var(--p-blue-800);
+  --color-deep: var(--p-blue-deep);
+  --color-footer: var(--p-navy-footer);
+  --color-heading: var(--p-blue-900);
+  --color-steel: var(--p-blue-600);
+  --color-sky: var(--p-blue-200);
+  --color-tint: var(--p-blue-50);
+  --color-tint-strong: var(--p-blue-100);
+  --color-page: var(--p-page);
+  --color-hairline: var(--p-grey-200);
+  --color-text: var(--p-grey-600);
+  --color-subtle: var(--p-grey-500);
+  /* gold-ink sets gold words on white; it only ever appears at heading sizes */
+  --color-gold: #b8922f;
+  --color-gold-ink: #b8922f;
+  --color-gold-light: #e3c57c;
+  --color-gold-deep: #6e5418;
+  --color-gold-wash: #f8f1e1;
+  --color-gold-line: #ecdcb6;
+  --font-display: 'Magistral', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-white font-sans text-text antialiased;
+}
+
+::selection {
+  background: var(--color-sky);
+  color: var(--color-deep);
+}
+
+/* allrisk.cz's header and drawer field (@allrisk/ui styles.css). */
+@utility bg-blue-gradient {
+  background-image: linear-gradient(to right, var(--p-blue-700), var(--p-blue-deep));
+}
+
+/* The map pin: the brand blue tag with a point under it. */
+.veselka-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.veselka-pin span {
+  border-radius: 10px;
+  background: var(--p-blue-700);
+  padding: 8px 12px;
+  font:
+    600 14px/1 'Inter Variable',
+    sans-serif;
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 12px 24px -12px rgb(0 70 200 / 0.6);
+}
+.veselka-pin::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  rotate: 45deg;
+  background: var(--p-blue-700);
+}
+
+.veselka-pin.is-gold span,
+.veselka-pin.is-gold::after {
+  background: var(--color-gold);
+}
+.veselka-pin.is-gold span {
+  box-shadow: 0 12px 24px -12px rgb(110 84 24 / 0.6);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Benefits on desktop, once motion.ts runs: the card being read stands out, the rest wait. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  [data-benefit-card] {
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease,
+      box-shadow 0.6s ease;
+  }
+  html[data-motion] [data-benefit]:not(.is-active) [data-benefit-card] {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  html[data-motion] [data-benefit].is-active [data-benefit-card] {
+    box-shadow: 0 32px 64px -32px rgb(110 84 24 / 0.35);
+  }
+}
