@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from 'react'
 import {
-  IconArrowDown,
   IconChevronLeft,
   IconChevronRight,
   IconMassage,
@@ -40,13 +39,10 @@ import {
   IconRoad,
   IconX,
 } from '@tabler/icons-react'
-import { Facade, slats } from './lamellas'
-import { Lattice } from './lattice'
 import { IntroEdge, IntroPanel, Zigzag } from './zigzag'
 import { LocationMap } from './map'
 import { OfferStage } from './offer'
 import { initMotion } from './motion'
-import { Switcher, variant } from './variants'
 import logoSvg from './logo.svg?raw'
 import * as c from './content'
 
@@ -69,9 +65,28 @@ const icons = {
   youtube: IconBrandYoutube,
 }
 
-export function Icon({ name, size = 24 }: { name: string; size?: number }) {
+export function Icon({
+  name,
+  size = 24,
+  stroke = 1.5,
+}: {
+  name: string
+  size?: number
+  stroke?: number
+}) {
   const I = icons[name as keyof typeof icons]
-  return I ? <I size={size} stroke={1.5} /> : null
+  return I ? <I size={size} stroke={stroke} /> : null
+}
+
+/** A card's icon again, large and pale, whole in its top right corner, as allrisk.cz's
+ *  service cards (`IconTile`) have it. The card is `relative isolate`; `className` places
+ *  and colours it. */
+function Watermark({ name, className }: { name: string; className: string }) {
+  return (
+    <span aria-hidden className={`pointer-events-none absolute -z-1 ${className}`}>
+      <Icon name={name} size={104} stroke={1.1} />
+    </span>
+  )
 }
 
 // The official file (Graphics/Skupina AR LOGA), recoloured by `color` and cropped to its ink.
@@ -113,25 +128,6 @@ export function Logo({ className = '', park = true }: { className?: string; park
   )
 }
 
-// The page's overall look, first in the switcher. Version 1 grows out of one fin's bend - the
-// brand's key visual (zigzag.tsx); version 2 is the page as it first went out, out of the
-// facade's loose fins (docs/verze-lamely.md). The diamonds (lattice.tsx) are kept off the
-// switcher. motion.css and motif.css read the choice from <html data-style>.
-const look = variant('styl', 'Celkový styl', [
-  { value: 'zlom', label: 'Verze 1 · zlom' },
-  { value: 'lamely', label: 'Verze 2 · lamely' },
-  { value: 'kosoctverce', label: 'Kosočtverce', hidden: true },
-])
-document.documentElement.dataset.style = look
-
-/** The blue fields' ground: the living facade, in version 2 the lattice of diamonds, in
- *  version 3 the bands breaking down the side. */
-function Ground({ left = false, ...props }: ComponentProps<typeof Facade> & { left?: boolean }) {
-  if (look === 'kosoctverce') return <Lattice />
-  // `left`: version 1's bands run down the left side instead, mirrored
-  if (look === 'zlom') return <Zigzag left={left} />
-  return <Facade {...props} />
-}
 
 export function App() {
   useLayoutEffect(() => initMotion(), [])
@@ -139,27 +135,14 @@ export function App() {
     <>
       <Header />
       <main>
-        {framed ? (
-          // version 2: one facade under both, running from the intro's foot up behind the framed
-          // photo; version 1: the intro carries its own ground in, over the hero (motion.ts)
-          <div className={`relative overflow-hidden ${look === 'zlom' ? '' : 'bg-blue-gradient'}`}>
-            {look !== 'zlom' && (
-              <div data-hero-facade data-order="0" aria-hidden className="pointer-events-none absolute inset-0">
-                <Ground gap={30} amp={0.12} opacity={0.2} tone="blue" />
-              </div>
-            )}
-            <SlidesProvider>
-              <Hero />
-            </SlidesProvider>
-            <Intro />
-            {look === 'zlom' && <IntroEdge />}
-          </div>
-        ) : (
-          <>
+        {/* the intro carries its own ground in, over the hero (motion.ts) */}
+        <div className="relative overflow-hidden">
+          <SlidesProvider>
             <Hero />
-            <Intro />
-          </>
-        )}
+          </SlidesProvider>
+          <Intro />
+          <IntroEdge />
+        </div>
         {/* the sections' column, as allrisk.cz's `Sections`: --gap from the intro and the footer */}
         <div className="bg-page py-[var(--sec)]">
           <Benefits />
@@ -173,7 +156,6 @@ export function App() {
         </div>
       </main>
       <Footer />
-      <Switcher />
     </>
   )
 }
@@ -197,8 +179,8 @@ function Header() {
 
   useEffect(() => {
     let last = window.scrollY
-    // While the hero's curtain runs the bar stays see-through and in place; motion.ts
-    // publishes where the curtain ends (data-end), without motion it is the top of the page.
+    // While the hero's scene runs the bar stays see-through and in place; motion.ts
+    // publishes where the scene ends (data-end), without motion it is the top of the page.
     const heroEnd = () =>
       Number(document.querySelector<HTMLElement>('[data-hero]')?.dataset.end) || 24
     const on = () => {
@@ -215,7 +197,7 @@ function Header() {
     on()
     window.addEventListener('scroll', on, { passive: true })
     const io = new IntersectionObserver(
-      // a section still hidden (version 1's intro, waiting over the hero) is not the one read
+      // a section still hidden (the intro, waiting over the hero) is not the one read
       (es) =>
         es.forEach(
           (e) =>
@@ -263,7 +245,7 @@ function Header() {
           </nav>
           <a
             href="#kontakt"
-            className={`hidden h-12 items-center gap-2 rounded-lg bg-white px-[22px] text-base font-semibold whitespace-nowrap transition-colors lg:inline-flex ${atTop && look !== 'zlom' ? 'text-gold hover:bg-gold-wash' : 'text-primary hover:bg-tint'}`}
+            className={`hidden h-12 items-center gap-2 rounded-lg bg-white px-[22px] text-base font-semibold whitespace-nowrap transition-colors lg:inline-flex text-primary hover:bg-tint`}
           >
             <IconPhone size={20} />
             Kontakt
@@ -283,11 +265,7 @@ function Header() {
         <div className="bg-blue-gradient fixed inset-x-0 top-0 z-[100] h-dvh overflow-y-auto lg:hidden">
           <div className="mx-auto flex h-20 items-center justify-between px-6">
             <HeaderLogo />
-            <button
-              className={barIcon}
-              onClick={() => setOpen(false)}
-              aria-label="Zavřít menu"
-            >
+            <button className={barIcon} onClick={() => setOpen(false)} aria-label="Zavřít menu">
               <IconX size={24} />
             </button>
           </div>
@@ -311,17 +289,8 @@ function Header() {
   )
 }
 
-const curtain = slats(22, 5)
-
 // The hero runs the renders one after another, each coming in from the right behind a "<"
-// edge. On the scroll, version 1 brings the intro in over it from the right; version 2 pulls
-// the photo away into a frame over the blue facade. The earlier gold-fin curtain is kept off
-// the switcher, at ?hero=curtain.
-const heroMode = variant('hero', 'Hero', [
-  { value: 'break', label: 'Zlom' },
-  { value: 'curtain', label: 'Zlatá opona', hidden: true },
-])
-const framed = heroMode !== 'curtain'
+// edge. On the scroll the intro comes in over it from the right.
 
 const heroSection = 'relative z-20 h-[100svh] min-h-[640px] overflow-hidden'
 const slideMs = 6500
@@ -340,7 +309,7 @@ function useSlides(count: number, ms: number) {
   const [{ at, was }, set] = useState({ at: 0, was: -1 })
   const go = (i: number) => set((s) => (i === s.at ? s : { at: i, was: s.at }))
   // the photos change only while the page rests at its top: once it scrolls, the hero is
-  // leaving (version 1's intro coming in over it), and a photo changing under that is noise
+  // leaving (the intro coming in over it), and a photo changing under that is noise
   const [still, setStill] = useState(true)
   // each return to the top starts the photo's time afresh
   const [round, setRound] = useState(0)
@@ -370,64 +339,38 @@ function Hero() {
     <section
       id="top"
       data-hero
-      data-hero-mode={!framed ? 'curtain' : look === 'zlom' ? 'sweep' : 'frame'}
-      className={`${heroSection} ${framed ? '' : 'bg-deep'}`}
+      className={heroSection}
     >
       {/* isolated, so the photos' and the panel's layers stay under the copy */}
-      <div data-hero-frame className="absolute inset-0 isolate overflow-hidden bg-deep">
-        {framed ? (
-          <HeroSlides />
-        ) : (
-          <img
-            data-hero-img
-            src={c.hero.image}
-            alt=""
-            className="absolute inset-0 size-full object-cover object-[50%_60%]"
-          />
-        )}
+      <div className="absolute inset-0 isolate overflow-hidden bg-deep">
+        <HeroSlides />
         {/* dark only where the header and the copy sit, and lightly - the building stays a bright
             photo; the copy's own shadow keeps it legible over the busy parts */}
-        <div data-hero-shade className="absolute inset-x-0 top-0 z-[3] h-[30%] bg-gradient-to-b from-black/45 to-transparent" />
-        <div data-hero-shade className="absolute inset-x-0 bottom-0 z-[3] h-[60%] bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        <div data-hero-shade className="absolute inset-y-0 left-0 z-[3] w-3/4 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
+        <div
+          data-hero-shade
+          className="absolute inset-x-0 top-0 z-[3] h-[30%] bg-gradient-to-b from-black/45 to-transparent"
+        />
+        <div
+          data-hero-shade
+          className="absolute inset-x-0 bottom-0 z-[3] h-[60%] bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+        />
+        <div
+          data-hero-shade
+          className="absolute inset-y-0 left-0 z-[3] w-3/4 bg-gradient-to-r from-black/50 via-black/20 to-transparent"
+        />
       </div>
-
-      {/* the curtain: the facade's gold fins close over the hero and part again on the intro,
-          which has slid in underneath; the gold backing fills the gaps between the leaning fins */}
-      {!framed && (
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
-          <div
-            data-hero-backing
-            className="absolute inset-0 opacity-0 bg-[linear-gradient(90deg,#8a6420,#d9a640_50%,#8a6420)]"
-          />
-          {curtain.map((s, i) => (
-            <span
-              key={s.i}
-              data-hero-strip={i % 2 ? 'up' : 'down'}
-              data-skew={s.skew}
-              className="absolute -top-[10%] h-[120%]"
-              style={{
-                left: `${(i / curtain.length) * 100 - 2}%`,
-                width: `${100 / curtain.length + 4}%`,
-                background: `linear-gradient(180deg, #f6d47a, ${s.color} 45%, #6e5418)`,
-                transform: `skewX(${s.skew}deg) translateY(${i % 2 ? -115 : 115}%)`,
-              }}
-            />
-          ))}
-        </div>
-      )}
 
       <div
         data-hero-copy
-        // version 1 on a phone: clear of the intro's strip on the right
-        className={`relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-16 [text-shadow:0_2px_4px_rgb(0_0_0/0.35),0_4px_32px_rgb(0_0_0/0.65)] lg:px-8 lg:pb-24 ${look === 'zlom' ? 'pr-16' : ''}`}
+        // on a phone: clear of the intro's strip on the right
+        className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-16 [text-shadow:0_2px_4px_rgb(0_0_0/0.35),0_4px_32px_rgb(0_0_0/0.65)] lg:px-8 lg:pb-24 pr-16"
       >
         <div data-hero-fade className="mb-5">
           <Eyebrow className="text-white/85">{c.hero.eyebrow}</Eyebrow>
         </div>
         <h1
-          // version 1: clear of the intro's strip on the right (from 76% of the width)
-          className={`font-display text-[clamp(40px,7vw,76px)] leading-[1.04] font-medium tracking-[-0.02em] text-white [&_strong]:font-bold [&_strong]:text-gold-light ${look === 'zlom' ? 'max-lg:text-[34px] lg:max-w-[calc(76vw-11rem)] lg:text-[clamp(36px,3.6vw,56px)]' : 'lg:max-w-[90%]'}`}
+          // clear of the intro's strip on the right (from 76% of the width)
+          className="font-display text-[clamp(40px,7vw,76px)] leading-[1.04] font-medium tracking-[-0.02em] text-white [&_strong]:font-bold [&_strong]:text-gold-light max-lg:text-[34px] lg:max-w-[calc(76vw-11rem)] lg:text-[clamp(36px,3.6vw,56px)]"
         >
           {c.hero.title.map((line) => (
             <span key={line} className="block overflow-hidden pt-[0.12em]">
@@ -445,14 +388,8 @@ function Hero() {
             {c.hero.cta}
             <IconArrowRight size={18} className="transition group-hover:translate-x-1" />
           </a>
-          <a
-            href="#projekt"
-            className="inline-flex items-center gap-2 px-3 py-4 text-sm text-white/85 hover:text-white"
-          >
-            <IconArrowDown size={16} className="animate-bounce" /> {c.hero.scroll}
-          </a>
         </div>
-        {framed && <SlideBars inline={look === 'zlom'} />}
+        <SlideBars />
       </div>
     </section>
   )
@@ -483,19 +420,19 @@ function HeroSlides() {
 }
 
 /** Where the slideshow is - the caption, the count and a bar per photo, each jumping to it. */
-function SlideBars({ inline = false }: { inline?: boolean }) {
+function SlideBars() {
   const slides = c.hero.slides
   const { at, go, still, round } = useSlidesState()
   return (
-    // version 1 keeps them under the buttons: the intro's panel takes the hero's right side
+    // kept under the buttons: the intro's panel takes the hero's right side
     <div
       data-hero-fade
-      className={`[text-shadow:none] ${inline ? 'mt-8 w-full max-w-80 lg:mt-12' : 'absolute right-5 bottom-6 left-20 lg:right-8 lg:bottom-24 lg:left-auto lg:w-80'}`}
+      className="mt-8 w-full max-w-80 [text-shadow:none] lg:mt-12"
     >
-      {/* under the buttons only the bars: the count and the caption belong to the corner */}
+      {/* under the buttons only the bars: the count and the caption are for screen readers */}
       <p
         aria-live="polite"
-        className={`mb-3 hidden items-baseline gap-3 text-sm text-white/85 [text-shadow:0_1px_12px_rgb(0_0_0/0.5)] ${inline ? '' : 'lg:flex'}`}
+        className="mb-3 hidden items-baseline gap-3 text-sm text-white/85 [text-shadow:0_1px_12px_rgb(0_0_0/0.5)]"
       >
         <span className="font-display text-base font-medium text-white">
           {String(at + 1).padStart(2, '0')}
@@ -555,20 +492,9 @@ function Fill({ ms, paused = false }: { ms: number; paused?: boolean }) {
 }
 
 /** The kicker above every title. */
-function Eyebrow({
-  children,
-  className = '',
-}: {
-  children: ReactNode
-  className?: string
-}) {
+function Eyebrow({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <p
-      data-eyebrow
-      className={`text-[13px] font-bold tracking-[0.16em] uppercase ${className}`}
-    >
-      {children}
-    </p>
+    <p className={`text-[13px] font-bold tracking-[0.16em] uppercase ${className}`}>{children}</p>
   )
 }
 
@@ -626,8 +552,18 @@ function SectionHead({
  *  at most and set in the middle of the section, fading into the grey page above and below.
  *  `fixed` holds it on the screen instead, the whole way through the section, while the
  *  content scrolls over it. */
-function Backdrop({ src, fixed = false }: { src: string; fixed?: boolean }) {
-  const fade = '[mask-image:linear-gradient(180deg,transparent,#000_30%,#000_70%,transparent)]'
+function Backdrop({
+  src,
+  fixed = false,
+  held = false,
+}: {
+  src: string
+  fixed?: boolean
+  held?: boolean
+}) {
+  // the page alone in the top and bottom quarter; between them the photo comes in from
+  // nothing, fullest at the middle
+  const fade = '[mask-image:linear-gradient(180deg,transparent_25%,#000_50%,transparent_75%)]'
   const ground = (
     <>
       <img src={src} alt="" loading="lazy" className="size-full object-cover grayscale" />
@@ -641,11 +577,19 @@ function Backdrop({ src, fixed = false }: { src: string; fixed?: boolean }) {
         <div className={`sticky top-0 h-[100lvh] ${fade}`}>{ground}</div>
       </div>
     )
+  // inside a pinned row: one screen centred on the row, so it is held still with it
+  if (held)
+    return (
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-1/2 h-[100lvh] -translate-y-1/2 ${fade}`}
+      >
+        {ground}
+      </div>
+    )
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
-      <div
-        className={`absolute inset-x-0 top-1/2 h-[min(100%,100lvh)] -translate-y-1/2 ${fade}`}
-      >
+      <div className={`absolute inset-x-0 top-1/2 h-[min(100%,100lvh)] -translate-y-1/2 ${fade}`}>
         {ground}
       </div>
     </div>
@@ -663,26 +607,20 @@ function Section({ className = '', ...props }: ComponentProps<'section'>) {
 const btn =
   'group inline-flex h-12 items-center justify-center gap-3 rounded-lg px-7 font-semibold transition-colors'
 
-/** What the hero's curtain opens onto: the title, the two paragraphs side by side under it,
+/** What the hero gives way to: the title, the two paragraphs side by side under it,
  *  at the copy's own height. motion.ts slides it in under the pinned hero. */
 function Intro() {
   return (
     <section
       data-intro
-      className={`relative ${look === 'zlom' ? 'z-30 flex flex-col justify-center' : framed ? 'overflow-hidden' : 'overflow-hidden bg-blue-gradient'} pt-[var(--intro-pad)] pb-[var(--sec)] text-white [--intro-pad:5rem] lg:[--intro-pad:7rem]`}
+      className={`relative z-30 flex flex-col justify-center pt-[var(--intro-pad)] pb-[var(--sec)] text-white [--intro-pad:5rem] lg:[--intro-pad:7rem]`}
     >
-      {framed && look === 'zlom' && <IntroPanel />}
-      {/* the living facade the curtain opens onto: loose fins that line up into the chevron and
-          lean away from the pointer. It covers the screen's worth at the foot only - the top of
-          the section is spent under the curtain, and the fins bend around their middle. */}
-      {!framed && (
-        <div data-hero-facade data-order="0" className="absolute inset-x-0 bottom-0 h-[100svh]">
-          <Ground gap={30} amp={0.12} opacity={0.2} tone="blue" />
-        </div>
-      )}
-      {/* the anchor is the copy, not the section: the section's top is spent under the curtain */}
+      <IntroPanel />
+      {/* the anchor is the copy, not the section: the section's top is spent under
+          the hero */}
       <div id="projekt" data-intro-copy className={`relative w-full scroll-mt-24 ${wrap}`}>
-        <div data-reveal className="max-w-4xl">
+        {/* 42rem at most: the copy ends before the ribbons on the right, a laptop's width too */}
+        <div data-reveal className="max-w-2xl">
           <Eyebrow className="text-white/70">{c.intro.eyebrow}</Eyebrow>
           <h2
             className={`mt-4 font-display text-[32px] leading-[1.1] font-medium tracking-[-0.02em] text-balance text-white lg:text-[40px] ${emph(true)}`}
@@ -692,7 +630,7 @@ function Intro() {
         </div>
         <div
           data-stagger
-          className="mt-8 grid max-w-3xl gap-5 text-lg leading-relaxed text-white/80 lg:mt-10"
+          className="mt-8 grid max-w-2xl gap-5 text-lg leading-relaxed text-white/80 lg:mt-10"
         >
           {c.intro.paragraphs.map((p) => (
             <p key={p}>{p}</p>
@@ -703,85 +641,55 @@ function Intro() {
   )
 }
 
-/** The gold section. Desktop: the picture stays put on the left; as each reason's card comes
- *  up, gold fins close over the photo and part again on the next one (motion.ts). Every card
- *  carries its own progress line, filling while it is read - on a phone as well. */
+const photo = 'min-h-0 overflow-hidden rounded-xl bg-tint [&>img]:size-full [&>img]:object-cover'
+
+/** Six reasons on a horizontal run: the row of cards is held in the middle of the screen and
+ *  they pass from right to left as the page scrolls (motion.ts, data-hscroll) - on a phone as
+ *  well. A reason is a white card, its photo on top. */
 function Benefits() {
   const items = c.benefits.items
   return (
-    <Section id="benefity" className="relative bg-page">
-      <Backdrop src="/img/ext-2.webp" fixed />
+    <Section id="benefity" className="relative overflow-hidden bg-page">
       <div className={`relative ${wrap}`}>
         <SectionHead eyebrow={c.benefits.eyebrow} title={c.benefits.title} accent="gold" />
-        {/* on a phone the picture's column dissolves (contents), so the picture sticks to the
-            top of the whole list and the cards pass under it */}
-        <div className="mt-10 grid lg:mt-4 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
-          <div className="contents lg:block">
-            <div className="sticky top-3 z-10 h-[38svh] overflow-hidden rounded-3xl bg-deep lg:top-[calc(50vh-min(36vh,20rem))] lg:z-auto lg:h-[min(72vh,40rem)]">
-              {items.map((b, i) => (
-                <div
-                  key={b.title}
-                  data-benefit-layer
-                  className="absolute inset-0 overflow-hidden"
-                  style={{ zIndex: i }}
-                >
-                  <img src={b.image} alt="" loading="lazy" className="size-full object-cover" />
-                  {i > 0 && look !== 'zlom' && <Fins seed={i * 3} />}
-                </div>
-              ))}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/3 bg-gradient-to-t from-black/40 to-transparent" />
-            </div>
-          </div>
-          <ol className="flex flex-col">
-            {items.map((b, i) => (
-              <li key={b.title} data-benefit className="flex min-h-[62svh] items-center lg:min-h-[72vh]">
-                <article
-                  data-benefit-card
-                  className="w-full overflow-hidden rounded-2xl border border-hairline bg-white lg:p-10"
-                >
-                  <div className="p-6 lg:p-0">
-                    {/* the progress line runs between the icon and the number */}
-                    <div className="flex items-center gap-5">
-                      <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gold text-white">
-                        <Icon name={b.icon} size={24} />
-                      </span>
-                      <span aria-hidden className="h-[3px] flex-1 overflow-hidden rounded-full bg-gold-line">
-                        <span data-benefit-bar className="block size-full origin-left bg-gold" />
-                      </span>
-                      <span className="font-display text-4xl leading-none font-medium text-gold lg:text-5xl">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <h3 className="mt-7 text-2xl leading-snug font-semibold text-gold">{b.title}</h3>
-                    <p className="mt-3 text-lg leading-relaxed">{b.text}</p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ol>
+      </div>
+      {/* the title scrolls away as Pro koho's does; only the cards are held, in the middle of
+          the screen */}
+      <div data-hscroll className="relative mt-10 lg:mt-14">
+        {/* the ground goes with the held row, so it stays put while the cards pass */}
+        <Backdrop src="/img/ext-2.webp" held />
+        <div
+          data-hscroll-track
+          className="relative flex gap-4 px-5 lg:gap-6 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+        >
+          {items.map((b, i) => (
+            <article
+              key={b.title}
+              data-hscroll-card
+              className="flex w-[85vw] shrink-0 flex-col rounded-2xl border border-hairline bg-white p-4 sm:w-[26rem] md:p-6 lg:w-[28rem]"
+            >
+              {/* one height for every photo, lower on a short screen so the held row fits it;
+                  the cards in a row share the tallest text */}
+              <div className={`h-[min(15rem,30svh)] lg:h-[min(18rem,calc(100vh-27rem))] ${photo}`}>
+                <img src={b.image} alt="" loading="lazy" />
+              </div>
+              {/* as allrisk.cz's service cards: the icon on its plate, the title and the text
+                  under it, the icon again in the corner */}
+              <div className="relative isolate pt-5 lg:pt-6">
+                <Watermark name={b.icon} className="top-5 right-0 text-gold-wash lg:top-6" />
+                <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-gold-wash text-gold">
+                  <Icon name={b.icon} size={28} />
+                </span>
+                <h3 className="mt-4 text-xl leading-snug font-semibold text-heading">
+                  {i + 1}. {b.title}
+                </h3>
+                <p className="mt-2 leading-relaxed">{b.text}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </Section>
-  )
-}
-
-/** The facade's gold fins over a photo, closed to nothing until motion.ts sweeps them across. */
-function Fins({ seed }: { seed: number }) {
-  return (
-    <span aria-hidden className="pointer-events-none absolute inset-0 flex">
-      {slats(14, seed).map((s) => (
-        <span
-          key={s.i}
-          data-benefit-fin
-          data-skew={s.skew}
-          className="-mx-[2px] h-full flex-1"
-          style={{
-            background: `linear-gradient(180deg, #f6d47a, ${s.color} 45%, #6e5418)`,
-            transform: `skewX(${s.skew}deg) scale(0, 1.2)`,
-          }}
-        />
-      ))}
-    </span>
   )
 }
 
@@ -790,12 +698,12 @@ type Persona = (typeof c.audience.items)[number]
 function PersonaCopy({ a }: { a: Persona }) {
   return (
     <>
-      <div className="flex items-center gap-4">
-        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-primary text-white">
-          <Icon name={a.icon} size={24} />
-        </span>
-        <h3 className="text-xl leading-snug font-semibold text-heading lg:text-2xl">{a.title}</h3>
-      </div>
+      <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-tint text-primary">
+        <Icon name={a.icon} size={28} />
+      </span>
+      <h3 className="mt-5 text-xl leading-snug font-semibold text-heading lg:mt-6 lg:text-2xl">
+        {a.title}
+      </h3>
       <p className="mt-3 max-w-md leading-relaxed lg:mt-4 lg:text-lg">{a.text}</p>
       <ul className="mt-4 flex flex-wrap gap-2 lg:mt-5">
         {a.kinds.map((k) => (
@@ -808,17 +716,15 @@ function PersonaCopy({ a }: { a: Persona }) {
   )
 }
 
-const photo = 'min-h-0 overflow-hidden rounded-xl bg-tint [&>img]:size-full [&>img]:object-cover'
-
 /** The personas as a stack: each card sticks under the header and the next one rises over it
- *  from below, the one beneath stepping back (motion.ts, desktop). White cards with the
- *  allrisk.cz hairline on the grey page. */
+ *  from below, the one beneath stepping back (motion.ts). White cards with the allrisk.cz
+ *  hairline on the grey page. */
 function Audience() {
   const items = c.audience.items
   return (
     <Section id="pro-koho" className="bg-page">
       <div className={wrap}>
-        <SectionHead eyebrow={c.audience.eyebrow} title={c.audience.title} lead={c.audience.lead} />
+        <SectionHead eyebrow={c.audience.eyebrow} title={c.audience.title} />
         <div className="mt-14 flex flex-col gap-6 lg:gap-10">
           {items.map((a, i) => (
             <article
@@ -829,13 +735,15 @@ function Audience() {
               style={{ '--i': i } as CSSProperties}
             >
               {/* half and half: the main photo on the left; on the right the copy over the
-                  other two photos side by side, again half and half */}
+                  other two photos side by side, again half and half. On a phone the right
+                  half dissolves (contents): the copy first, all three photos under it */}
               <div className="grid h-full gap-4 p-4 md:grid-cols-2 md:grid-rows-[minmax(0,1fr)] md:gap-6 md:p-6">
                 <div className={`h-40 md:h-full ${photo}`}>
                   <img src={a.images[0]} alt="" loading="lazy" />
                 </div>
-                <div className="grid gap-4 md:grid-rows-[minmax(0,1fr)_minmax(0,1fr)] md:gap-6">
-                  <div className="flex flex-col justify-center md:px-2">
+                <div className="contents md:grid md:grid-rows-[minmax(0,1fr)_minmax(0,1fr)] md:gap-6">
+                  <div className="relative isolate order-first flex flex-col justify-center md:order-none">
+                    <Watermark name={a.icon} className="top-0 right-0 text-tint" />
                     <PersonaCopy a={a} />
                   </div>
                   <div className="grid h-24 grid-cols-2 gap-3 md:h-auto">
@@ -861,15 +769,7 @@ function Audience() {
 }
 
 // Seven renders as one mosaic (4 columns x 3 rows on desktop): the hero shot takes a 2x2 tile.
-const tile = [
-  'col-span-2 row-span-2',
-  'col-span-2',
-  '',
-  '',
-  '',
-  '',
-  'col-span-2',
-]
+const tile = ['col-span-2 row-span-2', 'col-span-2', '', '', '', '', 'col-span-2']
 
 /** The renders as a mosaic on a dark ground, each opening the full-screen viewer. */
 function Gallery() {
@@ -892,14 +792,8 @@ function Gallery() {
 
   return (
     <Section id="vizualizace" className="relative overflow-clip bg-page">
-      <Backdrop src="/img/ext-5.webp" />
       <div className={`relative ${wrap}`}>
-        <SectionHead
-          eyebrow={c.gallery.eyebrow}
-          title={c.gallery.title}
-          lead={c.gallery.lead}
-          accent="gold"
-        />
+        <SectionHead eyebrow={c.gallery.eyebrow} title={c.gallery.title} accent="gold" />
         <div
           data-stagger
           className="mt-14 grid auto-rows-[150px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[min(260px,28vh)] lg:grid-cols-4 lg:gap-4"
@@ -955,7 +849,11 @@ function Viewer({
   }, [])
   // the current thumbnail stays in view as the photos change
   useEffect(() => {
-    strip.current?.children[cur]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' })
+    strip.current?.children[cur]?.scrollIntoView({
+      block: 'nearest',
+      inline: 'center',
+      behavior: 'smooth',
+    })
   }, [cur])
 
   return (
@@ -964,7 +862,8 @@ function Viewer({
       aria-modal
       aria-label={shot.caption}
       data-lenis-prevent
-      className="fixed inset-0 z-[300] flex flex-col bg-black text-white">
+      className="fixed inset-0 z-[300] flex flex-col bg-black text-white"
+    >
       <div className="flex h-16 shrink-0 items-center justify-between gap-4 pl-5 lg:pl-8">
         <p className="min-w-0 truncate text-sm">
           <span className="font-semibold">
@@ -981,7 +880,10 @@ function Viewer({
         </button>
       </div>
 
-      <div className="relative flex min-h-0 flex-1 items-center justify-center" onClick={() => setCur(null)}>
+      <div
+        className="relative flex min-h-0 flex-1 items-center justify-center"
+        onClick={() => setCur(null)}
+      >
         <img
           key={shot.src}
           src={shot.src}
@@ -1007,7 +909,10 @@ function Viewer({
         ))}
       </div>
 
-      <div ref={strip} className="no-scrollbar flex shrink-0 gap-2 overflow-x-auto px-5 py-4 lg:justify-center lg:px-8">
+      <div
+        ref={strip}
+        className="no-scrollbar flex shrink-0 gap-2 overflow-x-auto px-5 py-4 lg:justify-center lg:px-8"
+      >
         {shots.map((s, i) => (
           <button
             key={s.src}
@@ -1027,11 +932,10 @@ function Viewer({
 /** The offer, in blue: the building, a floor's plan and a unit in one frame. */
 function Offer() {
   return (
-    <Section id="prostory" className="bg-page">
-      <div className={wrap}>
-        <OfferStage
-          head={<SectionHead eyebrow={c.offer.eyebrow} title={c.offer.title} />}
-        />
+    <Section id="prostory" className="relative overflow-clip bg-page">
+      <Backdrop src="/img/ext-5.webp" />
+      <div className={`relative ${wrap}`}>
+        <OfferStage head={<SectionHead eyebrow={c.offer.eyebrow} title={c.offer.title} />} />
       </div>
     </Section>
   )
@@ -1052,19 +956,25 @@ function Location() {
           />
           <ul data-stagger className="mt-10 flex flex-col gap-3">
             {c.location.points.map((p) => (
-              <li key={p.title} className="flex gap-4 rounded-2xl border border-hairline bg-white p-5">
-                <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gold text-white">
-                  <Icon name={p.icon} size={24} />
+              <li
+                key={p.title}
+                className="flex gap-4 rounded-2xl border border-hairline bg-white p-5"
+              >
+                <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-gold-wash text-gold">
+                  <Icon name={p.icon} size={28} />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-gold-deep">{p.title}</h3>
+                  <h3 className="font-semibold text-heading">{p.title}</h3>
                   <p className="mt-1 text-[15px] leading-relaxed">{p.text}</p>
                 </div>
               </li>
             ))}
           </ul>
         </div>
-        <div data-reveal className="relative h-[24rem] overflow-hidden rounded-2xl lg:h-[min(40rem,75vh)]">
+        <div
+          data-reveal
+          className="relative h-[24rem] overflow-hidden rounded-2xl lg:h-[min(40rem,75vh)]"
+        >
           <LocationMap
             lat={c.location.pin.lat}
             lng={c.location.pin.lng}
@@ -1094,9 +1004,9 @@ function Partners() {
     // neighbours as any other section, and its own --sec inside
     <Section id="partneri" aria-label={plain(c.partners.title)}>
       <div className="bg-blue-gradient relative overflow-hidden py-[var(--sec)]">
-        {/* the living facade (lamely.html, proposal 1): loose fins the pointer blows about */}
+        {/* the living facade (navrhy.html, the facade's proposal 1): loose fins the pointer blows about */}
         <div className="absolute inset-0">
-          <Ground gap={26} amp={0.2} order={0} opacity={0.2} tone="blue" />
+          <Zigzag />
         </div>
         <ul
           data-stagger
@@ -1203,7 +1113,12 @@ function Contact() {
       label: 'Zavolejte nám',
       href: `tel:${c.contact.phone.replace(/\s/g, '')}`,
     },
-    { icon: IconMail, value: c.contact.email, label: 'Napište nám', href: `mailto:${c.contact.email}` },
+    {
+      icon: IconMail,
+      value: c.contact.email,
+      label: 'Napište nám',
+      href: `mailto:${c.contact.email}`,
+    },
   ]
   return (
     <Section id="kontakt" className="relative overflow-clip bg-page">
@@ -1215,7 +1130,7 @@ function Contact() {
         >
           {/* the facade's fins faint in the band's own blue */}
           <div className="absolute inset-0 -z-10">
-            <Ground left gap={30} amp={0.14} order={0} opacity={0.18} tone="blue" />
+            <Zigzag left />
           </div>
           <div className="grid gap-12 lg:grid-cols-2">
             <div className="flex flex-col">
@@ -1295,7 +1210,11 @@ function Contact() {
                     className={`${field} h-auto py-3.5`}
                   />
                   <label className="flex gap-3 text-sm text-subtle">
-                    <input type="checkbox" required className="mt-0.5 size-4 shrink-0 accent-primary" />
+                    <input
+                      type="checkbox"
+                      required
+                      className="mt-0.5 size-4 shrink-0 accent-primary"
+                    />
                     {c.contact.consent}
                   </label>
                   <button className={`${btn} w-full bg-primary text-white hover:bg-primary-hover`}>

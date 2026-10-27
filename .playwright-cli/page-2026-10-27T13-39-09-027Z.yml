@@ -1,0 +1,315 @@
+- generic [ref=f7e2]:
+  - banner [ref=f7e3]:
+    - generic [ref=f7e5]:
+      - link [ref=f7e6] [cursor=pointer]:
+        - /url: "#top"
+        - img "Allrisk VESELKA Business & Lifestyle Park" [ref=f7e7]
+      - navigation [ref=f7e8]:
+        - link "Projekt" [ref=f7e9] [cursor=pointer]:
+          - /url: "#projekt"
+        - link "Benefity" [ref=f7e10] [cursor=pointer]:
+          - /url: "#benefity"
+        - link "Pro koho" [ref=f7e11] [cursor=pointer]:
+          - /url: "#pro-koho"
+        - link "Vizualizace" [ref=f7e12] [cursor=pointer]:
+          - /url: "#vizualizace"
+        - link "Prostory" [ref=f7e13] [cursor=pointer]:
+          - /url: "#prostory"
+        - link "Lokalita" [ref=f7e14] [cursor=pointer]:
+          - /url: "#lokalita"
+      - link "Kontakt" [ref=f7e15] [cursor=pointer]:
+        - /url: "#kontakt"
+  - main [ref=f7e18]:
+    - generic [ref=f7e19]:
+      - generic [ref=f7e26]:
+        - paragraph [ref=f7e28]: Business & Lifestyle Park · Troubsko u Brna
+        - heading "Prémiový prostor s charakterem pro značky s ambicí" [level=1] [ref=f7e29]:
+          - generic [ref=f7e30]: Prémiový prostor s charakterem
+          - strong [ref=f7e34]: pro značky s ambicí
+        - paragraph [ref=f7e35]: Reprezentativní komerční prostory, které nejsou jen dobrou adresou, ale stávají se součástí image vaší značky.
+        - link "Mám zájem o prostor" [ref=f7e37] [cursor=pointer]:
+          - /url: "#kontakt"
+        - generic [ref=f7e42]:
+          - button "Zlatá fasáda od příjezdové cesty" [ref=f7e43]
+          - button "Parter s kavárnou a terasou" [ref=f7e45]
+          - button "Příjezd od kruhového objezdu" [ref=f7e47]
+          - button "Vstup s orientačním pylonem" [ref=f7e49]
+          - button "Letecký pohled od dálnice" [ref=f7e51]
+          - button "Recepce nájemce po Fit Out" [ref=f7e53]
+      - generic [ref=f7e57]:
+        - generic [ref=f7e58]:
+          - paragraph [ref=f7e59]: O projektu
+          - heading [level=2] [ref=f7e60]:
+            - text: Nejde o další komerční zónu. Jde o
+            - strong [ref=f7e61]: místo s vlastním výrazem.
+        - generic [ref=f7e62]:
+          - paragraph [ref=f7e63]: Allrisk VESELKA vzniká jako moderní business & lifestyle park v Troubsku u Brna. Výrazná architektura, strategická dostupnost a promyšlená skladba nájemců vytváří prostředí pro služby a značky s vyšší přidanou hodnotou.
+          - paragraph [ref=f7e64]: Propojujeme moderní business prostředí, odborné služby, wellbeing koncepty, design a showroomové značky do jednoho funkčního celku. Alternativa k anonymním retailovým zónám a generickým kancelářským komplexům, jaká nemá nejen v Brně obdoby.
+    - generic [ref=f7e65]:
+      - generic [ref=f7e66]:
+        - generic [ref=f7e68]:
+          - paragraph [ref=f7e69]: Proč Allrisk VESELKA
+          - heading [level=2] [ref=f7e70]:
+            - strong [ref=f7e71]: Šest důvodů
+            - text: ", proč tady růst"
+        - generic [ref=f7e73]:
+          - article [ref=f7e74]:
+            - generic [ref=f7e76]:
+              - heading "1. Výrazná architektura a identita" [level=3] [ref=f7e81]
+              - paragraph [ref=f7e82]: Zlatá fasáda přirozeně přitahuje pozornost, zvyšuje zapamatovatelnost místa a podporuje image značek, které tu sídlí.
+          - article [ref=f7e83]:
+            - generic [ref=f7e85]:
+              - heading "2. Strategická poloha" [level=3] [ref=f7e90]
+              - paragraph [ref=f7e91]: Výborná dostupnost autem i MHD a napojení na hlavní dopravní tahy. Bez zajíždění do centra a bez hledání parkování.
+          - article [ref=f7e92]:
+            - generic [ref=f7e94]:
+              - heading "3. Exkluzivní prostředí a kvalitní klientela" [level=3] [ref=f7e99]
+              - paragraph [ref=f7e100]: Bonitní klienti orientovaní na kvalitu, profesionální služby na vysoké úrovni a silný zákaznický zážitek.
+          - article [ref=f7e101]:
+            - generic [ref=f7e103]:
+              - heading "4. Synergie nájemců" [level=3] [ref=f7e107]
+              - paragraph [ref=f7e108]: Promyšlený mix služeb, značek a konceptů, které se vzájemně podporují typem klientely i úrovní služeb.
+          - article [ref=f7e109]:
+            - generic [ref=f7e111]:
+              - heading "5. Komfort pro vaše služby i klientelu" [level=3] [ref=f7e116]
+              - paragraph [ref=f7e117]: Parkování přímo v areálu pro klienty i zaměstnance, přehlednost, diskrétnost a soukromí, které prémiová klientela očekává.
+          - article [ref=f7e118]:
+            - generic [ref=f7e120]:
+              - heading "6. Shell & Core i Fit Out" [level=3] [ref=f7e124]
+              - paragraph [ref=f7e125]: Komerční jednotky od 70 m² k prodeji i pronájmu. Prostor převezmete ve stavu Shell & Core a dotvoříte po svém, nebo vám jej připravíme na klíč přesně podle vašich představ.
+      - generic [ref=f7e127]:
+        - generic [ref=f7e128]:
+          - paragraph [ref=f7e129]: Pro koho
+          - heading [level=2] [ref=f7e130]:
+            - text: Moderní komerční prostory
+            - strong [ref=f7e131]: pro všechna vaše zaměření
+        - generic [ref=f7e132]:
+          - article [ref=f7e133]:
+            - generic [ref=f7e137]:
+              - heading "Kliniky a ordinace" [level=3] [ref=f7e143]
+              - paragraph [ref=f7e144]: Moderní komerční prostory pro vaši ordinaci i kliniku.
+              - list [ref=f7e145]:
+                - listitem [ref=f7e146]: Ordinace
+                - listitem [ref=f7e147]: Privátní klinika
+                - listitem [ref=f7e148]: Estetická medicína
+                - listitem [ref=f7e149]: Fyzioterapie
+          - article [ref=f7e153]:
+            - generic [ref=f7e157]:
+              - heading "Kavárny a restaurace" [level=3] [ref=f7e165]
+              - paragraph [ref=f7e166]: Moderní komerční prostory pro vaši restauraci či kavárnu.
+              - list [ref=f7e167]:
+                - listitem [ref=f7e168]: Kavárna
+                - listitem [ref=f7e169]: Restaurace
+                - listitem [ref=f7e170]: Bistro
+          - article [ref=f7e174]:
+            - generic [ref=f7e178]:
+              - heading "Obchody a služby" [level=3] [ref=f7e183]
+              - paragraph [ref=f7e184]: Velkorysé komerční prostory pro váš market, služby i obchodní jednotku.
+              - list [ref=f7e185]:
+                - listitem [ref=f7e186]: Market
+                - listitem [ref=f7e187]: Obchodní jednotka
+                - listitem [ref=f7e188]: Showroom
+                - listitem [ref=f7e189]: Služby
+          - article [ref=f7e193]:
+            - generic [ref=f7e197]:
+              - heading "Beauty a wellbeing koncepty" [level=3] [ref=f7e204]
+              - paragraph [ref=f7e205]: Prémiové komerční prostory pro váš beauty salon i wellbeing koncept.
+              - list [ref=f7e206]:
+                - listitem [ref=f7e207]: Beauty salon
+                - listitem [ref=f7e208]: Kosmetika
+                - listitem [ref=f7e209]: Masáže
+                - listitem [ref=f7e210]: Wellbeing
+          - article [ref=f7e214]:
+            - generic [ref=f7e218]:
+              - heading "Fitness centrum" [level=3] [ref=f7e225]
+              - paragraph [ref=f7e226]: Exkluzivní komerční prostory pro vaše fitness studio.
+              - list [ref=f7e227]:
+                - listitem [ref=f7e228]: Fitness centrum
+                - listitem [ref=f7e229]: Fitness studio
+                - listitem [ref=f7e230]: Pohyb a aktivní životní styl
+      - generic [ref=f7e235]:
+        - generic [ref=f7e236]:
+          - paragraph [ref=f7e237]: Vizualizace
+          - heading [level=2] [ref=f7e238]:
+            - text: Architektura, která se
+            - strong [ref=f7e239]: nezapomíná
+        - generic [ref=f7e240]:
+          - button "Parter s kavárnou a terasou Parter s kavárnou a terasou" [ref=f7e241]:
+            - img "Parter s kavárnou a terasou" [ref=f7e242]
+            - generic [ref=f7e244]: Parter s kavárnou a terasou
+          - button "Příjezd od kruhového objezdu Příjezd od kruhového objezdu" [ref=f7e245]:
+            - img "Příjezd od kruhového objezdu" [ref=f7e246]
+            - generic [ref=f7e248]: Příjezd od kruhového objezdu
+          - button "Vstup s orientačním pylonem Vstup s orientačním pylonem" [ref=f7e249]:
+            - img "Vstup s orientačním pylonem" [ref=f7e250]
+            - generic [ref=f7e252]: Vstup s orientačním pylonem
+          - button "Nároží s obchodní jednotkou Nároží s obchodní jednotkou" [ref=f7e253]:
+            - img "Nároží s obchodní jednotkou" [ref=f7e254]
+            - generic [ref=f7e256]: Nároží s obchodní jednotkou
+          - button "Letecký pohled od dálnice Letecký pohled od dálnice" [ref=f7e257]:
+            - img "Letecký pohled od dálnice" [ref=f7e258]
+            - generic [ref=f7e260]: Letecký pohled od dálnice
+          - button "Letecký pohled od Troubska Letecký pohled od Troubska" [ref=f7e261]:
+            - img "Letecký pohled od Troubska" [ref=f7e262]
+            - generic [ref=f7e264]: Letecký pohled od Troubska
+          - button "Recepce nájemce po Fit Out Recepce nájemce po Fit Out" [ref=f7e265]:
+            - img "Recepce nájemce po Fit Out" [ref=f7e266]
+            - generic [ref=f7e268]: Recepce nájemce po Fit Out
+      - generic [ref=f7e273]:
+        - generic [ref=f7e274]:
+          - generic [ref=f7e275]:
+            - paragraph [ref=f7e276]: Nabídka prostor
+            - heading [level=2] [ref=f7e277]:
+              - text: Vyberte si
+              - strong [ref=f7e278]: svůj prostor
+          - tablist "Zobrazení" [ref=f7e279]:
+            - tab "Mapa" [selected] [ref=f7e280]
+            - tab "Tabulka" [ref=f7e283]
+        - img "Budova Allrisk VESELKA" [ref=f7e288]:
+          - button "3. NP, 0 volných" [ref=f7e290] [cursor=pointer]
+          - button "2. NP, 0 volných" [ref=f7e291] [cursor=pointer]
+          - button "1. NP, 0 volných" [ref=f7e292] [cursor=pointer]
+      - generic [ref=f7e294]:
+        - generic [ref=f7e295]:
+          - generic [ref=f7e296]:
+            - paragraph [ref=f7e297]: Lokalita
+            - heading [level=2] [ref=f7e298]:
+              - text: Troubsko
+              - strong [ref=f7e299]: u Brna
+            - paragraph [ref=f7e300]: Na dosah Brna, a přesto mimo jeho dopravu. Vaši klienti přijedou rychle, zaparkují přímo před vchodem a nemusí řešit centrum města.
+          - list [ref=f7e301]:
+            - listitem [ref=f7e302]:
+              - generic [ref=f7e307]:
+                - heading "Napojení na hlavní tahy" [level=3] [ref=f7e308]
+                - paragraph [ref=f7e309]: Rychlý příjezd autem i MHD odkudkoli z Brna i okolí, bez hledání cesty.
+            - listitem [ref=f7e310]:
+              - generic [ref=f7e315]:
+                - heading "Mimo centrum města" [level=3] [ref=f7e316]
+                - paragraph [ref=f7e317]: Žádné zácpy ani zóny placeného stání, vaši klienti přijedou v klidu.
+            - listitem [ref=f7e318]:
+              - generic [ref=f7e323]:
+                - heading "Parkování v areálu" [level=3] [ref=f7e324]
+                - paragraph [ref=f7e325]: Stání přímo před vchodem, pro nájemce i jejich klienty.
+        - generic [ref=f7e326]:
+          - generic [ref=f7e328]:
+            - button "Přiblížit" [ref=f7e329]
+            - button "Oddálit" [ref=f7e331]
+          - link "Navigovat" [ref=f7e333] [cursor=pointer]:
+            - /url: https://mapy.cz/zakladni?x=16.507&y=49.1785&z=15
+      - region "Za projektem stojí" [ref=f7e336]:
+        - list [ref=f7e339]:
+          - listitem [ref=f7e340]:
+            - link "Allrisk VESELKA" [ref=f7e342] [cursor=pointer]:
+              - /url: "#top"
+            - paragraph [ref=f7e356]: developer projektu
+          - listitem [ref=f7e357]:
+            - img "Gebas atelier architects" [ref=f7e359]
+            - paragraph [ref=f7e360]: generální projektant
+          - listitem [ref=f7e361]:
+            - img "Allrisk reality & finance, a.s." [ref=f7e363]
+            - paragraph [ref=f7e364]: výhradní realitní zástupce
+      - generic [ref=f7e366]:
+        - generic [ref=f7e367]:
+          - generic [ref=f7e368]:
+            - paragraph [ref=f7e369]: Sociální sítě
+            - heading [level=2] [ref=f7e370]:
+              - text: Sledujte, jak
+              - strong [ref=f7e371]: Veselka roste
+            - paragraph [ref=f7e372]: Průběh výstavby, noví nájemci a akce v parku. Všechno nejdřív na našich sítích.
+          - paragraph [ref=f7e373]: "@allriskveselka"
+        - generic [ref=f7e374]:
+          - link "Instagram Fotky z výstavby a život v parku" [ref=f7e375] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f7e385]: Instagram
+            - generic [ref=f7e386]: Fotky z výstavby a život v parku
+          - link "Facebook Novinky, akce a pozvánky" [ref=f7e387] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f7e396]: Facebook
+            - generic [ref=f7e397]: Novinky, akce a pozvánky
+          - link "YouTube Videa a prohlídky prostorů" [ref=f7e398] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f7e408]: YouTube
+            - generic [ref=f7e409]: Videa a prohlídky prostorů
+          - link "LinkedIn Nájemci, partneři a byznys" [ref=f7e410] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f7e420]: LinkedIn
+            - generic [ref=f7e421]: Nájemci, partneři a byznys
+      - generic [ref=f7e429]:
+        - generic [ref=f7e430]:
+          - heading [level=2] [ref=f7e431]:
+            - text: Najděte pro
+            - strong [ref=f7e432]: svou značku
+            - text: adresu s charakterem
+          - paragraph [ref=f7e433]: Zanechte nám kontakt a my se vám ozveme s podrobnostmi o prostorech, dispozicích a možnostech pronájmu či koupě.
+          - generic [ref=f7e434]:
+            - link "+420 770 332 223 Zavolejte nám" [ref=f7e435] [cursor=pointer]:
+              - /url: tel:+420770332223
+              - generic [ref=f7e439]:
+                - generic [ref=f7e440]: +420 770 332 223
+                - generic [ref=f7e441]: Zavolejte nám
+            - link "info@allriskveselka.cz Napište nám" [ref=f7e442] [cursor=pointer]:
+              - /url: mailto:info@allriskveselka.cz
+              - generic [ref=f7e447]:
+                - generic [ref=f7e448]: info@allriskveselka.cz
+                - generic [ref=f7e449]: Napište nám
+        - generic [ref=f7e451]:
+          - textbox "Jméno a příjmení *" [ref=f7e452]
+          - generic [ref=f7e453]:
+            - textbox "E-mail *" [ref=f7e454]
+            - textbox "Telefon *" [ref=f7e455]
+          - textbox "Zpráva" [ref=f7e456]
+          - generic [ref=f7e457]:
+            - checkbox "Souhlasím se zpracováním osobních údajů za účelem odpovědi na můj dotaz." [ref=f7e458]
+            - text: Souhlasím se zpracováním osobních údajů za účelem odpovědi na můj dotaz.
+          - button "Odeslat poptávku" [ref=f7e459]
+  - contentinfo [ref=f7e463]:
+    - generic [ref=f7e464]:
+      - generic [ref=f7e465]:
+        - generic [ref=f7e466]:
+          - link "Allrisk VESELKA" [ref=f7e467] [cursor=pointer]:
+            - /url: "#top"
+            - img [ref=f7e468]:
+              - generic [ref=f7e481]: Business & Lifestyle Park
+          - paragraph [ref=f7e482]: Prémiový business & lifestyle park v Troubsku u Brna pro značky a služby s ambicí.
+          - navigation "Sociální sítě" [ref=f7e483]:
+            - link "Instagram" [ref=f7e484] [cursor=pointer]:
+              - /url: "#"
+            - link "Facebook" [ref=f7e488] [cursor=pointer]:
+              - /url: "#"
+            - link "YouTube" [ref=f7e491] [cursor=pointer]:
+              - /url: "#"
+            - link "LinkedIn" [ref=f7e495] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=f7e499]:
+          - navigation "Projekt" [ref=f7e500]:
+            - heading "Projekt" [level=2] [ref=f7e501]
+            - generic [ref=f7e502]:
+              - link "Projekt" [ref=f7e503] [cursor=pointer]:
+                - /url: "#projekt"
+              - link "Benefity" [ref=f7e504] [cursor=pointer]:
+                - /url: "#benefity"
+              - link "Pro koho" [ref=f7e505] [cursor=pointer]:
+                - /url: "#pro-koho"
+              - link "Vizualizace" [ref=f7e506] [cursor=pointer]:
+                - /url: "#vizualizace"
+              - link "Prostory" [ref=f7e507] [cursor=pointer]:
+                - /url: "#prostory"
+              - link "Lokalita" [ref=f7e508] [cursor=pointer]:
+                - /url: "#lokalita"
+          - generic [ref=f7e509]:
+            - heading "Kontakt" [level=2] [ref=f7e510]
+            - generic [ref=f7e511]:
+              - link "+420 770 332 223" [ref=f7e512] [cursor=pointer]:
+                - /url: tel:+420770332223
+              - link "info@allriskveselka.cz" [ref=f7e515] [cursor=pointer]:
+                - /url: mailto:info@allriskveselka.cz
+              - paragraph [ref=f7e519]: Troubsko u Brna
+      - generic [ref=f7e524]:
+        - generic [ref=f7e525]: © 2026 Allrisk Veselka, s.r.o.
+        - navigation "Právní informace" [ref=f7e526]:
+          - link "Ochrana osobních údajů" [ref=f7e527] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookies" [ref=f7e528] [cursor=pointer]:
+            - /url: "#"
+  - button "Přepínač variant" [ref=f7e530]:
+    - generic [ref=f7e535]: Varianty

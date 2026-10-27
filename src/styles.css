@@ -2,7 +2,7 @@
 @import '@fontsource-variable/inter';
 @import './tokens.css';
 
-/* both entry pages (index.html, lamely.html); new files were otherwise missed until a restart */
+/* both entry pages (index.html, navrhy.html); new files were otherwise missed until a restart */
 @source './';
 
 @font-face {
@@ -42,8 +42,9 @@
   --color-text: var(--p-grey-600);
   --color-subtle: var(--p-grey-500);
   /* gold-ink sets gold words on white; it only ever appears at heading sizes */
-  --color-gold: #b8922f;
-  --color-gold-ink: #b8922f;
+  /* the graphics' own gold (zigzag.tsx GOLD, the lines and fins), in type and icons too */
+  --color-gold: #c9962f;
+  --color-gold-ink: #c9962f;
   --color-gold-light: #e3c57c;
   --color-gold-deep: #6e5418;
   --color-gold-wash: #f8f1e1;
@@ -142,22 +143,5 @@ body {
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
-  }
-}
-
-/* Benefits, once motion.ts runs: the card being read stands out, the rest wait. */
-@media (prefers-reduced-motion: no-preference) {
-  [data-benefit-card] {
-    transition:
-      opacity 0.6s ease,
-      transform 0.6s ease,
-      box-shadow 0.6s ease;
-  }
-  html[data-motion] [data-benefit]:not(.is-active) [data-benefit-card] {
-    opacity: 0.4;
-    transform: scale(0.96);
-  }
-  html[data-motion] [data-benefit].is-active [data-benefit-card] {
-    box-shadow: 0 32px 64px -32px rgb(110 84 24 / 0.35);
   }
 }

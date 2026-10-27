@@ -35,7 +35,7 @@ import { floorPlan, PLAN_H, PLAN_TOP, PLAN_W, toPath, type Pt } from './budova/p
 // rebuilt from their classes. The section is blue: the floors, the plans and the free units.
 
 const view = views[0]
-// closer in than budova.html: the building fills the frame
+// closer in than the first standalone draft: the building fills the frame
 const crop = [336, 100, 1000, 563] as const
 const [cx, cy, cw, ch] = crop
 const pts = (ps: Pt[]) => ps.map(([x, y]) => `${x},${y}`).join(' ')

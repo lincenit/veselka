@@ -1,0 +1,9 @@
+[     735ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://lincenit.github.io/favicon.ico:0
+[    1383ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/61fc9b5d-7a35-4bf3-95cb-cdce616461f3:0
+[    1383ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/61fc9b5d-7a35-4bf3-95cb-cdce616461f3:0
+[    7352ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/36057104-8741-4eae-b346-6c5bd9393691:0
+[    7352ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/36057104-8741-4eae-b346-6c5bd9393691:0
+[   13445ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/b6637dbd-eaea-4419-8563-fe3ae4c65459:0
+[   13445ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/b6637dbd-eaea-4419-8563-fe3ae4c65459:0
+[   19018ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/90c7ed04-272a-4aaa-b439-074031d3c623:0
+[   19019ms] [WARNING] Expected value to be of type number, but found null instead. @ blob:https://lincenit.github.io/90c7ed04-272a-4aaa-b439-074031d3c623:0

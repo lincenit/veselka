@@ -131,10 +131,13 @@ export function Zigzag({ bold = false, left = false }: { bold?: boolean; left?: 
   const period = amp * 6
   const n = Math.ceil(h / period) + 1
   const top = (h - n * period) / 2
+  // below a desktop the copy runs the whole width: the ribbons move out past the edge, only
+  // the gold line's tips showing in the margin beside the copy
+  const dx = vw < 1024 ? Math.max(0, (w - 14) / w - 0.71) : 0
   // `flip` puts the vertex the other way: the gold crosses the bands
   const zig = (x: number, flip = false) =>
     Array.from({ length: 2 * n + 1 }, (_, i) => [
-      x * w + ((i % 2 === 1) !== flip ? 0 : amp),
+      (x + dx) * w + ((i % 2 === 1) !== flip ? 0 : amp),
       top + (i * period) / 2,
     ])
   const strip = (x: number, bw: number) => {

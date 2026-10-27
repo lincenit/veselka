@@ -1,44 +1,16 @@
-/* The diamonds (off the switcher, ?styl=kosoctverce): the lozenge from lattice.tsx put to work.
-   A diamond is W 56 : H 130 there; the shapes here keep that slant. */
-
-/* the eyebrow opens with a small gold diamond */
-html[data-style='kosoctverce'] [data-eyebrow]::before {
-  content: '';
-  display: inline-block;
-  width: 0.55em;
-  height: 1.25em;
-  margin-right: 0.75em;
-  vertical-align: -0.3em;
-  background: var(--color-gold);
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-}
-
-/* the icon badges are diamonds instead of rounded squares */
-html[data-style='kosoctverce'] [data-badge] {
-  width: 3.5rem;
-  height: 4.5rem;
-  border-radius: 0;
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-}
-
-/* the large photos lose their top right corner along a diamond's edge */
-html[data-style='kosoctverce'] [data-cut] {
-  clip-path: polygon(0 0, calc(100% - 3.5rem) 0, 100% 8.125rem, 100% 100%, 0 100%);
-}
-
-/* Version 1 (the default, ?styl=zlom): the break from zigzag.tsx - one bent edge with a gold
+/* The break from zigzag.tsx - one bent edge with a gold
    line beside it. */
 
 /* the hero's panel slides in from the right and its gold line runs down after it; `translate`,
    not `transform`, which motion.ts drives on the scroll */
-html[data-style='zlom'] .zz-sweep-in {
+.zz-sweep-in {
   animation: zz-sweep 1.2s cubic-bezier(0.7, 0, 0.2, 1) 0.2s backwards;
 }
-html[data-style='zlom'] .zz-line-in {
+.zz-line-in {
   animation: zz-line 1s cubic-bezier(0.6, 0, 0.3, 1) 1.1s backwards;
 }
 /* the hero edge's gold line is drawn by motion.ts, top down with the scroll */
-html[data-style='zlom'] [data-intro-edge] [data-chevron-line] {
+[data-intro-edge] [data-chevron-line] {
   stroke-dasharray: 1 1;
 }
 @keyframes zz-sweep {
@@ -52,13 +24,13 @@ html[data-style='zlom'] [data-intro-edge] [data-chevron-line] {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  html[data-style='zlom'] .zz-sweep-in,
-  html[data-style='zlom'] .zz-line-in {
+  .zz-sweep-in,
+  .zz-line-in {
     animation: none;
   }
 }
 
 /* a photo standing on its own breaks inwards on its right edge */
-html[data-style='zlom'] [data-cut] {
+[data-cut] {
   clip-path: polygon(0 0, 100% 0, calc(100% - 3.5rem) 50%, 100% 100%, 0 100%);
 }
