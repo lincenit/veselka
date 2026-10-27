@@ -64,7 +64,8 @@ export function initMotion() {
           scrollTrigger: {
             trigger: scene,
             start: 'top top',
-            end: () => `+=${window.innerHeight}`,
+            // a screen for the sweep, then the intro holds while its gold line draws
+            end: () => `+=${window.innerHeight * 1.4}`,
             scrub: true,
             pin: true,
             invalidateOnRefresh: true,
@@ -85,11 +86,13 @@ export function initMotion() {
           { strokeDashoffset: 0, ease: 'none', duration: 0.45, autoRound: false },
           0,
         )
+        // only once the intro is in place: drawn while it slides in, most of it is still off
+        // the screen
         .fromTo(
           intro.querySelectorAll('[data-zz-line]'),
           { strokeDashoffset: 1 },
-          { strokeDashoffset: 0, ease: 'none', duration: 0.6, autoRound: false },
-          0.4,
+          { strokeDashoffset: 0, ease: 'none', duration: 0.4, autoRound: false },
+          1,
         )
       // the header stays see-through over the scene until the intro has come in
       hero.dataset.end = String(window.innerHeight)

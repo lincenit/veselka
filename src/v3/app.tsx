@@ -1032,7 +1032,7 @@ function Footer() {
         <div className="h-px bg-white/10" />
         <div className="flex flex-col gap-4 pb-6 text-grey-400 md:flex-row md:items-center">
           <div className="flex-1">
-            © {new Date().getFullYear()} {c.footer.copyright} · {c.footer.note}
+            © {new Date().getFullYear()} {c.footer.copyright}
           </div>
           <nav aria-label="Právní informace" className="flex flex-col gap-4 md:flex-row">
             {c.footer.legal.map((l) => (

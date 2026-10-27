@@ -248,5 +248,4 @@ export const footer = {
     { label: 'Ochrana osobních údajů', href: '#' },
     { label: 'Cookies', href: '#' },
   ],
-  note: 'Vizualizace jsou ilustrativní.',
 }
