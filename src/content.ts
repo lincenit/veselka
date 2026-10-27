@@ -194,16 +194,16 @@ export const partners = {
   eyebrow: 'Kdo stojí za projektem',
   title: 'Za projektem stojí',
   items: [
-    { logo: '', name: 'Allrisk Veselka, s.r.o.', role: 'Developer projektu' },
+    { logo: '', name: 'Allrisk Veselka, s.r.o.', role: 'developer projektu' },
     {
       logo: '/img/partner-gebas-white.png',
       name: 'Gebas atelier architects',
-      role: 'Generální projektant',
+      role: 'generální projektant',
     },
     {
       logo: '/img/partner-reality-white.png',
       name: 'Allrisk reality & finance, a.s.',
-      role: 'Výhradní realitní zástupce',
+      role: 'výhradní realitní zástupce',
     },
   ],
 }
@@ -218,7 +218,7 @@ export const social = {
 
 export const contact = {
   eyebrow: 'Kontakt',
-  title: 'Najděte pro svou značku *adresu s charakterem*',
+  title: 'Najděte pro *svou značku* adresu s charakterem',
   lead: 'Zanechte nám kontakt a my se vám ozveme s podrobnostmi o prostorech, dispozicích a možnostech pronájmu či koupě.',
   consent: 'Souhlasím se zpracováním osobních údajů za účelem odpovědi na můj dotaz.',
   submit: 'Odeslat poptávku',

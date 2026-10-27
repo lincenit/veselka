@@ -61,6 +61,18 @@ body {
   color: var(--color-deep);
 }
 
+/* The one gap between sections, as on allrisk.cz (@allrisk/ui styles.css): every section pads
+   itself with --sec, half of it, so any two meet --gap apart, where the ground changes too. */
+:root {
+  --gap: 80px;
+  --sec: calc(var(--gap) / 2);
+}
+@media (width >= 48rem) {
+  :root {
+    --gap: 128px;
+  }
+}
+
 /* allrisk.cz's header and drawer field (@allrisk/ui styles.css). */
 @utility bg-blue-gradient {
   background-image: linear-gradient(to right, var(--p-blue-700), var(--p-blue-deep));

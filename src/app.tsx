@@ -160,14 +160,17 @@ export function App() {
             <Intro />
           </>
         )}
-        <Benefits />
-        <Audience />
-        <Gallery />
-        <Offer />
-        <Location />
-        <Partners />
-        <Social />
-        <Contact />
+        {/* the sections' column, as allrisk.cz's `Sections`: --gap from the intro and the footer */}
+        <div className="bg-page py-[var(--sec)]">
+          <Benefits />
+          <Audience />
+          <Gallery />
+          <Offer />
+          <Location />
+          <Partners />
+          <Social />
+          <Contact />
+        </div>
       </main>
       <Footer />
       <Switcher />
@@ -619,34 +622,44 @@ function SectionHead({
   )
 }
 
-/** The sections' photo ground: the render in black and white under a light veil, held on the
- *  screen the whole way through the section (sticky), so it reads the same at every point of
- *  the scroll; it fades into the grey page at the section's top and foot. `bottom` instead
- *  sets it at the section's foot, a screen high, rising out of the page towards it. */
-function Backdrop({ src, bottom = false }: { src: string; bottom?: boolean }) {
-  if (bottom)
+/** The sections' photo ground: the render in black and white under a light veil, a screen high
+ *  at most and set in the middle of the section, fading into the grey page above and below.
+ *  `fixed` holds it on the screen instead, the whole way through the section, while the
+ *  content scrolls over it. */
+function Backdrop({ src, fixed = false }: { src: string; fixed?: boolean }) {
+  const fade = '[mask-image:linear-gradient(180deg,transparent,#000_30%,#000_70%,transparent)]'
+  const ground = (
+    <>
+      <img src={src} alt="" loading="lazy" className="size-full object-cover grayscale" />
+      <div className="absolute inset-0 bg-page/75" />
+    </>
+  )
+  if (fixed)
     return (
-      <div aria-hidden className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-x-0 bottom-0 h-[100lvh]">
-          <img src={src} alt="" loading="lazy" className="size-full object-cover grayscale" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-page),rgb(248_249_250/0.75)_45%,rgb(248_249_250/0.55))]" />
-        </div>
+      // clip, not hidden: a hidden overflow would become the sticky layer's scroller
+      <div aria-hidden className="absolute inset-0 overflow-clip">
+        <div className={`sticky top-0 h-[100lvh] ${fade}`}>{ground}</div>
       </div>
     )
   return (
-    // clip, not hidden: a hidden overflow would become the sticky layer's scroller
-    <div aria-hidden className="absolute inset-0 overflow-clip">
-      <div className="sticky top-0 h-[100lvh] overflow-hidden">
-        <img src={src} alt="" loading="lazy" className="size-full object-cover grayscale" />
-        <div className="absolute inset-0 bg-page/75" />
+    <div aria-hidden className="absolute inset-0 overflow-hidden">
+      <div
+        className={`absolute inset-x-0 top-1/2 h-[min(100%,100lvh)] -translate-y-1/2 ${fade}`}
+      >
+        {ground}
       </div>
-      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-page to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-page to-transparent" />
     </div>
   )
 }
 
 const wrap = 'mx-auto max-w-7xl px-5 lg:px-8'
+
+/** A band, as @allrisk/ui's `Section`: --sec top and bottom (styles.css), so the gap between
+ *  any two sections is always --gap, whatever their ground. */
+function Section({ className = '', ...props }: ComponentProps<'section'>) {
+  return <section className={`scroll-mt-16 py-[var(--sec)] ${className}`} {...props} />
+}
+
 const btn =
   'group inline-flex h-12 items-center justify-center gap-3 rounded-lg px-7 font-semibold transition-colors'
 
@@ -656,7 +669,7 @@ function Intro() {
   return (
     <section
       data-intro
-      className={`relative ${look === 'zlom' ? 'z-30 flex flex-col justify-center' : framed ? 'overflow-hidden' : 'overflow-hidden bg-blue-gradient'} pt-[var(--intro-pad)] pb-20 text-white [--intro-pad:5rem] lg:pb-28 lg:[--intro-pad:7rem]`}
+      className={`relative ${look === 'zlom' ? 'z-30 flex flex-col justify-center' : framed ? 'overflow-hidden' : 'overflow-hidden bg-blue-gradient'} pt-[var(--intro-pad)] pb-[var(--sec)] text-white [--intro-pad:5rem] lg:[--intro-pad:7rem]`}
     >
       {framed && look === 'zlom' && <IntroPanel />}
       {/* the living facade the curtain opens onto: loose fins that line up into the chevron and
@@ -696,8 +709,8 @@ function Intro() {
 function Benefits() {
   const items = c.benefits.items
   return (
-    <section id="benefity" className="relative scroll-mt-16 bg-page py-24 lg:py-32">
-      <Backdrop src="/img/ext-2.webp" />
+    <Section id="benefity" className="relative bg-page">
+      <Backdrop src="/img/ext-2.webp" fixed />
       <div className={`relative ${wrap}`}>
         <SectionHead eyebrow={c.benefits.eyebrow} title={c.benefits.title} accent="gold" />
         {/* on a phone the picture's column dissolves (contents), so the picture sticks to the
@@ -748,7 +761,7 @@ function Benefits() {
           </ol>
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
@@ -803,7 +816,7 @@ const photo = 'min-h-0 overflow-hidden rounded-xl bg-tint [&>img]:size-full [&>i
 function Audience() {
   const items = c.audience.items
   return (
-    <section id="pro-koho" className="scroll-mt-16 bg-page py-24 lg:py-32">
+    <Section id="pro-koho" className="bg-page">
       <div className={wrap}>
         <SectionHead eyebrow={c.audience.eyebrow} title={c.audience.title} lead={c.audience.lead} />
         <div className="mt-14 flex flex-col gap-6 lg:gap-10">
@@ -843,7 +856,7 @@ function Audience() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
@@ -878,11 +891,8 @@ function Gallery() {
   const shot = cur === null ? null : shots[cur]
 
   return (
-    <section
-      id="vizualizace"
-      className="relative scroll-mt-16 overflow-clip bg-page py-24 lg:py-32"
-    >
-      <Backdrop src="/img/ext-5.webp" bottom />
+    <Section id="vizualizace" className="relative overflow-clip bg-page">
+      <Backdrop src="/img/ext-5.webp" />
       <div className={`relative ${wrap}`}>
         <SectionHead
           eyebrow={c.gallery.eyebrow}
@@ -917,7 +927,7 @@ function Gallery() {
       </div>
 
       {shot && <Viewer shots={shots} cur={cur ?? 0} setCur={setCur} go={go} />}
-    </section>
+    </Section>
   )
 }
 
@@ -1017,13 +1027,13 @@ function Viewer({
 /** The offer, in blue: the building, a floor's plan and a unit in one frame. */
 function Offer() {
   return (
-    <section id="prostory" className="scroll-mt-16 bg-page py-24 lg:py-32">
+    <Section id="prostory" className="bg-page">
       <div className={wrap}>
         <OfferStage
           head={<SectionHead eyebrow={c.offer.eyebrow} title={c.offer.title} />}
         />
       </div>
-    </section>
+    </Section>
   )
 }
 
@@ -1031,7 +1041,7 @@ function Offer() {
  *  navigate button inside it. */
 function Location() {
   return (
-    <section id="lokalita" className="scroll-mt-16 bg-page py-24 lg:py-32">
+    <Section id="lokalita" className="bg-page">
       <div className={`grid gap-12 lg:grid-cols-2 lg:items-center ${wrap}`}>
         <div>
           <SectionHead
@@ -1073,37 +1083,41 @@ function Location() {
           </a>
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
-/** Who builds it: the white logos on the blue band, nothing else. */
+/** Who builds it: the white logos on the blue band, each with its role. */
 function Partners() {
   return (
-    <section
-      id="partneri"
-      aria-label={plain(c.partners.title)}
-      className="bg-blue-gradient relative scroll-mt-16 overflow-hidden"
-    >
-      {/* the living facade (lamely.html, proposal 1): loose fins the pointer blows about */}
-      <div className="absolute inset-0">
-        <Ground gap={26} amp={0.2} order={0} opacity={0.2} tone="blue" />
+    // the band runs edge to edge inside an ordinary section, so it keeps the same gap to its
+    // neighbours as any other section, and its own --sec inside
+    <Section id="partneri" aria-label={plain(c.partners.title)}>
+      <div className="bg-blue-gradient relative overflow-hidden py-[var(--sec)]">
+        {/* the living facade (lamely.html, proposal 1): loose fins the pointer blows about */}
+        <div className="absolute inset-0">
+          <Ground gap={26} amp={0.2} order={0} opacity={0.2} tone="blue" />
+        </div>
+        <ul
+          data-stagger
+          className={`relative grid items-center gap-12 sm:grid-cols-3 sm:gap-8 ${wrap}`}
+        >
+          {c.partners.items.map((p) => (
+            <li key={p.name} className="flex flex-col items-center text-center">
+              {/* one height for the logos, so the roles under them line up */}
+              <div className="flex h-12 items-center">
+                {p.logo ? (
+                  <img src={p.logo} alt={p.name} className="h-12 w-auto object-contain" />
+                ) : (
+                  <Logo park={false} className="h-9 text-white" />
+                )}
+              </div>
+              <p className="mt-5 text-sm text-white/70">{p.role}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul
-        data-stagger
-        className={`relative grid items-center gap-12 py-16 sm:grid-cols-3 sm:gap-8 ${wrap}`}
-      >
-        {c.partners.items.map((p) => (
-          <li key={p.name} className="flex justify-center">
-            {p.logo ? (
-              <img src={p.logo} alt={p.name} className="h-12 w-auto object-contain" />
-            ) : (
-              <Logo park={false} className="h-9 text-white" />
-            )}
-          </li>
-        ))}
-      </ul>
-    </section>
+    </Section>
   )
 }
 
@@ -1123,7 +1137,7 @@ const socialInk: Record<string, string> = {
 
 function Social() {
   return (
-    <section id="socialni-site" className="scroll-mt-16 bg-page py-24 lg:py-32">
+    <Section id="socialni-site" className="bg-page">
       <div className={`grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-16 ${wrap}`}>
         <div>
           <SectionHead eyebrow={c.social.eyebrow} title={c.social.title} lead={c.social.lead} />
@@ -1165,7 +1179,7 @@ function Social() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
@@ -1192,7 +1206,7 @@ function Contact() {
     { icon: IconMail, value: c.contact.email, label: 'Napište nám', href: `mailto:${c.contact.email}` },
   ]
   return (
-    <section id="kontakt" className="relative scroll-mt-16 overflow-clip bg-page py-24 lg:py-32">
+    <Section id="kontakt" className="relative overflow-clip bg-page">
       <Backdrop src="/img/ext-1.webp" />
       <div className={`relative ${wrap}`}>
         <div
@@ -1206,12 +1220,12 @@ function Contact() {
           <div className="grid gap-12 lg:grid-cols-2">
             <div className="flex flex-col">
               <h2
-                className="font-display text-[32px] leading-[1.1] font-medium tracking-[-0.02em] text-balance text-white lg:text-[40px] [&_strong]:font-bold"
+                className={`font-display text-[32px] leading-[1.1] font-medium tracking-[-0.02em] text-balance text-white lg:text-[40px] ${emph(true)}`}
               >
                 <Emph text={c.contact.title} />
               </h2>
               <p className="mt-4 mb-12 leading-[1.6] text-white/80">{c.contact.lead}</p>
-              <div data-stagger className="mt-auto flex flex-col gap-4">
+              <div data-stagger className="flex flex-col gap-4">
                 {boxes.map(({ icon: I, value, label, href }) => (
                   <a
                     key={value}
@@ -1294,7 +1308,7 @@ function Contact() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
