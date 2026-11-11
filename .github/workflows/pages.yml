@@ -24,6 +24,8 @@ jobs:
       - run: bun run build
         env:
           BASE: /${{ github.event.repository.name }}/
+      # the colour versions, built in allrisk-sites (sites/allrisk-veselka) and committed as is
+      - run: cp -R preview/. dist/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
